@@ -16,6 +16,7 @@
     </bean>
 
     <!--기본패키지 설정-->
-    <context:component-scan base-package="com"/>
+    <context:component-scan base-package="com.kakaologin"/>
+    <context:component-scan base-package="com.Home"/>
 
 </beans>
