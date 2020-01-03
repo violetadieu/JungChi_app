@@ -27,6 +27,7 @@ public class HomeController {
             session.setAttribute("userId", userInfo.get("email"));
             session.setAttribute("access_Token", access_Token);
         }
+
         return "home";
     }
 
