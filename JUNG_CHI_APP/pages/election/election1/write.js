@@ -1,15 +1,16 @@
+/* eslint-disable react-native/no-inline-styles */
 //This is an example code for NavigationDrawer//
 import React, {Component} from 'react';
 //import react in our code.
 import {StyleSheet, View, Text} from 'react-native';
 // import all basic components
 
-export default class MainPage extends Component {
-  //Screen1 Component
+export default class Screen2 extends Component {
+  //Screen2 Component
   render() {
     return (
       <View style={styles.MainContainer}>
-        <Text style={{fontSize: 23}}> Home </Text>
+        <Text style={{fontSize: 23}}> Write</Text>
       </View>
     );
   }
@@ -24,15 +25,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-const axios = require('axios');
-
-const getBreeds = () => {
-  try {
-    console.log('hdddasdfi');
-    return axios.get('happydaram2.cafe24.com:3306');
-  } catch (error) {
-    console.warn('asdf');
-    console.error(error);
-  }
-};

@@ -5,16 +5,14 @@ import {createAppContainer} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {createStackNavigator} from 'react-navigation-stack';
 
-import E1_HOME from './election1/home';
-import Search from './election1/search';
-import Write from './election1/write';
+import E1_HOME from './pages/election/election1/home';
+import Search from './pages/election/election1/search';
+import Write from './pages/election/election1/write';
 
 import RNU from 'react-native-units';
-import Home_Icon from 'react-native-vector-icons/Octicons';
-import Search_Icon from 'react-native-vector-icons/Entypo';
-import Write_Icon from 'react-native-vector-icons/SimpleLineIcons';
+import Icon from 'react-native-vector-icons/AntDesign';
 
-class Election1 extends Component {
+class Board extends Component {
   toggleDrawer = () => {
     //Props to open/close the drawer
 
@@ -25,9 +23,11 @@ class Election1 extends Component {
       <View style={styles.container}>
         <TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
           {/*Donute Button Image */}
-          <Image
-            source={require('../../image/drawer.png')}
-            style={{width: 30, height: 30, marginLeft: 12}}
+          <Icon
+            name="arrowleft"
+            size={RNU.vw(8)}
+            color="#FFF"
+            style={{marginLeft: RNU.vw(2)}}
           />
         </TouchableOpacity>
       </View>
@@ -41,7 +41,7 @@ const FirstActivity_StackNavigator = createStackNavigator({
     screen: E1_HOME,
     navigationOptions: ({navigation}) => ({
       title: '대통령 선거하기',
-      headerLeft: <Election1 navigationProps={navigation} />,
+      headerLeft: <Board navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#660099',
       },
@@ -55,8 +55,8 @@ const Screen1_StackNavigator = createStackNavigator({
   First: {
     screen: Search,
     navigationOptions: ({navigation}) => ({
-      title: '글 검색',
-      headerLeft: <Election1 navigationProps={navigation} />,
+      title: '투표하기',
+      headerLeft: <Board navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#660099',
       },
@@ -70,8 +70,8 @@ const Screen2_StackNavigator = createStackNavigator({
   Second: {
     screen: Write,
     navigationOptions: ({navigation}) => ({
-      title: '글 작성',
-      headerLeft: <Election1 navigationProps={navigation} />,
+      title: '당별 게시판',
+      headerLeft: <Board navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#660099',
       },
@@ -85,21 +85,18 @@ const BottomTabNavigator = createBottomTabNavigator({
     screen: FirstActivity_StackNavigator,
     navigationOptions: {
       tabBarLabel: '홈 화면',
-      tabBarIcon: <Home_Icon name="home" size={20} />,
     },
   },
   Screen1: {
     screen: Screen1_StackNavigator,
     navigationOptions: {
       tabBarLabel: '글 검색',
-      tabBarIcon: <Search_Icon name="magnifying-glass" size={20} />,
     },
   },
   Screen2: {
     screen: Screen2_StackNavigator,
     navigationOptions: {
       tabBarLabel: '글 작성',
-      tabBarIcon: <Write_Icon name="pencil" size={20} />,
     },
   },
 });

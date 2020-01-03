@@ -15,9 +15,11 @@ import {
   ScrollView,
   StyleSheet,
   Button,
+  FlatList,
 } from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import {createDrawerNavigator, DrawerItems} from 'react-navigation-drawer';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {createStackNavigator} from 'react-navigation-stack';
 import RNU from 'react-native-units';
 
@@ -31,7 +33,7 @@ import Election1 from './pages/election/Election1';
 import Election2 from './pages/election/Election2';
 
 class NavigationDrawerStructure extends Component {
-  //Structure for the navigatin Drawer
+  //Structure for the navigation Drawer
   toggleDrawer = () => {
     //Props to open/close the drawer
 
@@ -146,43 +148,6 @@ const fade = props => {
   };
 };
 
-const Election1_StackNavigator = createStackNavigator(
-  {
-    election1: {
-      screen: Election1,
-      navigationOptions: ({navigation}) => ({
-        title: '대통령 선거하기',
-        headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
-        headerStyle: {
-          backgroundColor: '#660099',
-        },
-        headerTintColor: '#fff',
-      }),
-    },
-  },
-  {
-    transitionConfig: () => ({
-      screenInterpolator: props => {
-        return fade(props);
-      },
-    }),
-  },
-);
-
-const Election2_StackNavigator = createStackNavigator({
-  election1: {
-    screen: Election2,
-    navigationOptions: ({navigation}) => ({
-      title: '국회의원 선거하기',
-      headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
-      headerStyle: {
-        backgroundColor: '#660099',
-      },
-      headerTintColor: '#fff',
-    }),
-  },
-});
-
 const DrawerNavigator = createDrawerNavigator(
   {
     //Drawer Options and indexing
@@ -251,16 +216,9 @@ const DrawerNavigator = createDrawerNavigator(
         ),
       },
     },
-
-    // 두 옵션은 보이지 않도록 해놓음.
     Election1: {
-      screen: Election1_StackNavigator,
-      navigationOptions: {
-        drawerLabel: () => null,
-      },
-    },
-    Election2: {
-      screen: Election2_StackNavigator,
+      screen: Election1,
+
       navigationOptions: {
         drawerLabel: () => null,
       },
