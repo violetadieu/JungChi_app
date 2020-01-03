@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Macro:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>Macro</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="smoker.war">
+      <element id="artifact" artifact-name="Macro:war exploded" />
+    </root>
+  </artifact>
+</component>
