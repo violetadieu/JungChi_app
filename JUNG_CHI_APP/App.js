@@ -14,8 +14,8 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  Button,
-  FlatList,
+  ToastAndroid,
+  BackHandler,
 } from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import {createDrawerNavigator, DrawerItems} from 'react-navigation-drawer';
@@ -129,25 +129,6 @@ const Screen4_StackNavigator = createStackNavigator({
   },
 });
 
-const fade = props => {
-  const {position, scene} = props;
-
-  const index = scene.index;
-
-  const translateX = 0;
-  const translateY = 0;
-
-  const opacity = position.interpolate({
-    inputRange: [index - 0.7, index, index + 0.7],
-    outputRange: [0.3, 1, 0.3],
-  });
-
-  return {
-    opacity,
-    transform: [{translateX}, {translateY}],
-  };
-};
-
 const DrawerNavigator = createDrawerNavigator(
   {
     //Drawer Options and indexing
@@ -218,9 +199,16 @@ const DrawerNavigator = createDrawerNavigator(
     },
     Election1: {
       screen: Election1,
-
       navigationOptions: {
         drawerLabel: () => null,
+        drawerLockMode: 'locked-closed',
+      },
+    },
+    Election2: {
+      screen: Election2,
+      navigationOptions: {
+        drawerLabel: () => null,
+        drawerLockMode: 'locked-closed',
       },
     },
   },
@@ -251,7 +239,6 @@ const DrawerNavigator = createDrawerNavigator(
         </ScrollView>
       </SafeAreaView>
     ),
-    drawerLockMode: 'unlocked',
   },
 );
 

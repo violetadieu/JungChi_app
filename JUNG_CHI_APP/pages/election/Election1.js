@@ -10,24 +10,25 @@ import Search from './election1/search';
 import Write from './election1/write';
 
 import RNU from 'react-native-units';
+import Back_Icon from 'react-native-vector-icons/Ionicons';
 import Home_Icon from 'react-native-vector-icons/Octicons';
 import Search_Icon from 'react-native-vector-icons/Entypo';
 import Write_Icon from 'react-native-vector-icons/SimpleLineIcons';
 
 class Election1 extends Component {
-  toggleDrawer = () => {
-    //Props to open/close the drawer
-
-    this.props.navigationProps.toggleDrawer();
-  };
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
+        <TouchableOpacity
+          onPress={() => {
+            this._pop();
+          }}>
           {/*Donute Button Image */}
-          <Image
-            source={require('../../image/drawer.png')}
-            style={{width: 30, height: 30, marginLeft: 12}}
+          <Back_Icon
+            name="ios-arrow-back"
+            size={30}
+            style={{marginLeft: RNU.vw(5)}}
+            color="#FFF"
           />
         </TouchableOpacity>
       </View>
@@ -67,7 +68,7 @@ const Screen1_StackNavigator = createStackNavigator({
 
 const Screen2_StackNavigator = createStackNavigator({
   //All the screen from the Screen2 will be indexed here
-  Second: {
+  First: {
     screen: Write,
     navigationOptions: ({navigation}) => ({
       title: '글 작성',

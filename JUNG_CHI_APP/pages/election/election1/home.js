@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 // import all basic components
 
-export default class Screen2 extends Component {
+export default class Home extends Component {
   //Screen2 Component
   render() {
     return (

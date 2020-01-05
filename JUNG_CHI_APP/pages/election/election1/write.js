@@ -5,12 +5,12 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 // import all basic components
 
-export default class Screen2 extends Component {
+export default class Write extends Component {
   //Screen2 Component
   render() {
     return (
       <View style={styles.MainContainer}>
-        <Text style={{fontSize: 23}}> Write</Text>
+        <Text style={{fontSize: 23}}> 대통령 선거 Write</Text>
       </View>
     );
   }

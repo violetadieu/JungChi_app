@@ -10,7 +10,7 @@ export default class Search extends Component {
   render() {
     return (
       <View style={styles.MainContainer}>
-        <Text style={{fontSize: 23}}> 대통령 선거 Search </Text>
+        <Text style={{fontSize: 23}}> 국회 의원 Search </Text>
       </View>
     );
   }
