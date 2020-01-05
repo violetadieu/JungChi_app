@@ -20,9 +20,7 @@ class Election1 extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => {
-            this._pop();
-          }}>
+          onPress={() => this.props.navigationProps.goBack(null)}>
           {/*Donute Button Image */}
           <Back_Icon
             name="ios-arrow-back"
