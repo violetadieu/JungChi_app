@@ -9,14 +9,19 @@
 </head>
 <body>
 <c:if test="${userId eq null}">
-    <a href="https://kauth.kakao.com/oauth/authorize?client_id=aae08713ac0b0defdd5018d5f6674ace&redirect_uri=http://localhost:8080/Macro_war_exploded/login_kakao&response_type=code">
+    카카오 로그인 :
+    <a href="${kakao_login_url}">
 
     <img src="/img/kakao_account_login_btn_medium_wide_ov.png">
     </a>
 </c:if>
-<c:if test="${userId ne null}">
-    <h1>로그인 성공입니다</h1>
-    <input type="button" value="로그아웃" onclick="location.href='/logout'">
+<br><br>
+<c:if test="${userId eq null}">
+    네이버 로그인 :
+    <a href="${naver_login_url}">
+
+        <img src="/img/kakao_account_login_btn_medium_wide_ov.png">
+    </a>
 </c:if>
 </body>
 

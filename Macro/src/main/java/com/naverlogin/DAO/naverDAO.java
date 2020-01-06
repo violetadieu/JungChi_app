@@ -1,4 +1,4 @@
-package com.kakaologin.DAO;
+package com.naverlogin.DAO;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -10,10 +10,9 @@ import org.springframework.stereotype.Repository;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Map;
 
 @Repository
-public class kakaoDAO {
+public class naverDAO {
 
     @Autowired
     SqlSessionTemplate sqlSession;
@@ -21,14 +20,12 @@ public class kakaoDAO {
     public MemberVO member_parse(JsonElement memberinfo){
         MemberVO member=new MemberVO();
         //json 파싱
-        JsonObject properties = memberinfo.getAsJsonObject().get("properties").getAsJsonObject();
-        JsonObject kakao_account = memberinfo.getAsJsonObject().get("kakao_account").getAsJsonObject();
+        JsonObject response = memberinfo.getAsJsonObject().get("response").getAsJsonObject();
         //유저정보 파싱
-        String social_id=memberinfo.getAsJsonObject().get("id").getAsString();
-        String email = kakao_account.getAsJsonObject().get("email").getAsString();
-        String gender= kakao_account.getAsJsonObject().get("gender").getAsString();
-        String nickname=properties.getAsJsonObject().get("nickname").getAsString();
-        String picture=properties.getAsJsonObject().get("thumbnail_image").getAsString();
+        String social_id=response.getAsJsonObject().get("id").getAsString();
+        String email = response.getAsJsonObject().get("email").getAsString();
+        String gender= response.getAsJsonObject().get("gender").getAsString();
+        String nickname=response.getAsJsonObject().get("nickname").getAsString();
         //연령대, 필요하게되면 사용할 것
         //String age_range=kakao_account.getAsJsonObject().get("age_range").getAsString();
 
@@ -37,7 +34,6 @@ public class kakaoDAO {
         member.setEmail(email);
         member.setGender(gender);
         member.setNickname(nickname);
-        member.setPicture(picture);
         return member;
     }
 
@@ -73,3 +69,4 @@ public class kakaoDAO {
         sqlSession.update(namespace+".updatemember",member);
     }
 }
+

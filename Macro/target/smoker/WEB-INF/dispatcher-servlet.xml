@@ -8,7 +8,7 @@
     <mvc:annotation-driven/>
 
     <!--정적자원 매핑-->
-    <mvc:resources location="/" mapping="/**"/>
+    <mvc:resources location="/" mapping="/"/>
     <!--viewResolver 설정-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
@@ -16,7 +16,8 @@
     </bean>
 
     <!--기본패키지 설정-->
-    <context:component-scan base-package="com.kakaologin"/>
-    <context:component-scan base-package="com.Home"/>
+    <context:component-scan base-package="com"/>
+    <context:annotation-config/>
+
 
 </beans>

@@ -1,32 +1,28 @@
-package com.kakaologin.service;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.HashMap;
-
-import com.google.gson.JsonObject;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.springframework.stereotype.Service;
+package com.naverlogin.service;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import org.springframework.stereotype.Service;
 
+import java.io.*;
+import java.math.BigInteger;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.security.SecureRandom;
 
 @Service
-public class kakaoAPI {
+public class naverAPI {
+    //상태 토큰 생성
+    public String generateState()
+    {
+        SecureRandom random = new SecureRandom();
+        return new BigInteger(130, random).toString(32);
+    }
 
-    public String getAccessToken (String authorize_code) {
+    public String getAccessToken(String code,String status_token){
         String access_Token = "";
         String refresh_Token = "";
-        String reqURL = "https://kauth.kakao.com/oauth/token";
-
+        String reqURL = "https://nid.naver.com/oauth2.0/token";
         try {
             URL url = new URL(reqURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -38,10 +34,12 @@ public class kakaoAPI {
             //    POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             StringBuilder sb = new StringBuilder();
-            sb.append("grant_type=authorization_code");
-            sb.append("&client_id=aae08713ac0b0defdd5018d5f6674ace");
-            sb.append("&redirect_uri=http://localhost:8080/Macro_war_exploded/login_kakao");
-            sb.append("&code=" + authorize_code);
+            sb.append("&client_id=eApd6IlHKyRNuqFJiyHe");
+            sb.append("&client_secret=xlyeuvwnyx");
+            sb.append("&grant_type=authorization_code");
+            sb.append("&redirect_uri=http://localhost:8080/Macro_war_exploded/login_naver");
+            sb.append("&state=" + status_token);
+            sb.append("&code=" + code);
             bw.write(sb.toString());
             bw.flush();
 
@@ -80,7 +78,7 @@ public class kakaoAPI {
     }
 
     public JsonElement getUserInfo (String access_Token) {
-        String reqURL = "https://kapi.kakao.com/v2/user/me";
+        String reqURL = "https://openapi.naver.com/v1/nid/me\n";
         try {
             URL url = new URL(reqURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -111,5 +109,4 @@ public class kakaoAPI {
         }
         return null;
     }
-
 }

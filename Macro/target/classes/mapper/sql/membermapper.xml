@@ -3,8 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.hee.heechart">
-    <select id="getTestValue" resultType="TestVO" parameterType="TestVO">
-            SELECT * FROM TEST WHERE TESTINPUT = #{testInput}
+<mapper namespace="com">
+    <select id="checkmember" resultType="MemberVO" parameterType="MemberVO">
+            SELECT * FROM member WHERE social_id = #{social_id}
       </select>
+    <insert id="insertmember" parameterType="MemberVO">
+        INSERT INTO `happydaram2`.`member` (`social_id`, `email`, `gender`, `nickname`, `picture`, `create_time`, `update_time`)
+        VALUES (#{social_id},#{email},#{gender},#{nickname},#{picture},#{create_time},#{update_time});
+    </insert>
+    <update id="updatemember" parameterType="MemberVO">
+        UPDATE`happydaram2`.`member` SET `email`=#{email}, `gender`=#{gender}, `nickname`=#{nickname}, `update_time`=#{update_time}
+        WHERE (`social_id` = #{social_id});
+    </update>
+
 </mapper>
