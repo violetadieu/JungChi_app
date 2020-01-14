@@ -6,7 +6,10 @@
     <!-- DB -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
         <property name="driverClass" value="org.mariadb.jdbc.Driver"></property>
+        <!-- local용-->
         <property name="url" value="jdbc:mariadb://happydaram2.cafe24.com:3306/happydaram2"></property>
+        <!-- 배포용
+        <property name="url" value="jdbc:mariadb://localhost:3306/happydaram2"></property>-->
         <property name="username" value="happydaram2"></property>
         <property name="password" value="da215ram4654g!"></property>
     </bean>

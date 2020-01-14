@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Article">
+    <select id="select_all" resultType="map">
+    SELECT FROM_BASE64(SELECT * FROM happydaram2.article)
+    </select>
+
+    <select id="select_board" resultType="map" parameterType="int">
+            SELECT * FROM happydaram2.article WHERE article_type=#{article_type}
+    </select>
+
+    <select id="select_one" resultType="ArticleVO" parameterType="String">
+        SELECT * FROM happydaram2.article WHERE article_id=#{article_id}
+    </select>
+
+    <insert id="insert_article" parameterType="ArticleVO">
+        INSERT INTO `happydaram2`.`article` (`subject`, `content`, `recommend`, `non_recommend`, `article_type`, `hit`, `nickname`,`social_id`)
+        VALUES (#{subject}, #{content},'0', '0', #{article_type}, '0', #{nickname},#{social_id});
+    </insert>
+
+    <update id="update_article" parameterType="ArticleVO">
+        UPDATE `happydaram2`.`article` SET `subject` = #{subject}, `content` = #{content}, `article_type` = #{article_type},`article_picture` = #{article_picture}
+        WHERE article_id=#{article_id};
+
+    </update>
+
+    <delete id="delete_article"  parameterType="String">
+        DELETE FROM `happydaram2`.`article` WHERE article_id=#{article_id};
+    </delete>
+</mapper>
