@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <package name="com.memberVO"/>
+        <package name="com.Member"/>
+        <package name="com.Article"/>
     </typeAliases>
 </configuration>

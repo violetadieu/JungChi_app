@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Macro:war2">
+    <output-path>$PROJECT_DIR$/out/artifacts/Macro_war2</output-path>
+    <root id="archive" name="Macro_war.war">
+      <element id="artifact" artifact-name="Macro:war exploded" />
+    </root>
+  </artifact>
+</component>
