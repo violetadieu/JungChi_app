@@ -5,21 +5,24 @@ import com.Article.VO.ArticleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.codec.binary.Base64;
 
 @Controller
 public class ArticleController {
 
     @Autowired
     ArticleDAO articleDAO;
+
     //조회(게시판 타입별)
     //전체
-    @RequestMapping("/read/all")
+    @RequestMapping(value = "/read/all", method = RequestMethod.POST)
     @ResponseBody
     public List<ArticleVO> article_all(){
         List<ArticleVO> list;
@@ -28,7 +31,7 @@ public class ArticleController {
     }
 
     //정당별 게시판 조회
-    @RequestMapping("/read/party")
+    @RequestMapping(value = "/read/party", method = RequestMethod.POST)
     @ResponseBody
     public List<ArticleVO> article_party(@RequestParam("party_id") int party_id){
         List<ArticleVO> list;
@@ -37,7 +40,7 @@ public class ArticleController {
     }
 
     //시사게시판 조회
-    @RequestMapping("/read/sisa")
+    @RequestMapping(value = "/read/sisa",method = RequestMethod.POST)
     @ResponseBody
     public List<ArticleVO> article_sisa(){
         List<ArticleVO> list;
@@ -46,7 +49,7 @@ public class ArticleController {
     }
 
     //자유게시판 조회
-    @RequestMapping("/read/free")
+    @RequestMapping(value = "/read/free",method = RequestMethod.POST)
     @ResponseBody
     public List<ArticleVO> article_free(){
         List<ArticleVO> list;
@@ -55,7 +58,7 @@ public class ArticleController {
     }
 
     //작성
-    @RequestMapping("/write")
+    @RequestMapping(value = "/write",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> write(@RequestParam("social_id") String social_id,
                                     @RequestParam("article_type") int article_type,
@@ -78,9 +81,9 @@ public class ArticleController {
     }
 
     //수정(수정할 게시글을 불러오기)
-    @RequestMapping("/modify/try")
+    @RequestMapping(value = "/modify/try",method = RequestMethod.POST)
     @ResponseBody
-    public List<ArticleVO> modify_try(@RequestParam("article_id") String article_id,@RequestParam("social_id") String social_id){
+    public List<ArticleVO> modify_try(@RequestParam("article_id") int article_id,@RequestParam("social_id") String social_id){
         ArticleVO articleVO=new ArticleVO();
         List<ArticleVO> list=null;
         try {
@@ -97,9 +100,9 @@ public class ArticleController {
     }
 
     //수정(해당 게시글을 수정하기)
-    @RequestMapping("/modify/complete")
+    @RequestMapping(value = "/modify/complete",method = RequestMethod.POST)
     @ResponseBody
-    public List<ArticleVO> modify_complete(@RequestParam("article_id") String article_id,@RequestParam("subject") String subject,
+    public List<ArticleVO> modify_complete(@RequestParam("article_id") int article_id,@RequestParam("subject") String subject,
                                            @RequestParam("content") String content, @RequestParam("article_type") int article_type,
                                            @RequestParam("nickname") String nickname, @RequestParam("social_id") String social_id,
                                            @RequestParam("article_picture")String article_picture){
@@ -116,9 +119,9 @@ public class ArticleController {
     }
 
     //삭제
-    @RequestMapping("/article/delete")
+    @RequestMapping(value = "/article/delete",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> delete(@RequestParam("article_id") String article_id, @RequestParam("social_id")String nickname){
+    public Map<String,Object> delete(@RequestParam("article_id") int article_id, @RequestParam("social_id")String social_id){
         Map<String, Object> map = new HashMap<String, Object>();
         ArticleVO articleVO=new ArticleVO();
         try {
@@ -127,7 +130,7 @@ public class ArticleController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(!articleVO.getNickname().equals(nickname)){//본인의 게시물이 아닌경우
+        if(!articleVO.getSocial_id().equals(social_id)){//본인의 게시물이 아닌경우
             map.put("result","fail");
         }
         else {

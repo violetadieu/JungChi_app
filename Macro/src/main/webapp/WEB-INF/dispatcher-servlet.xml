@@ -14,10 +14,20 @@
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-
     <!--기본패키지 설정-->
     <context:component-scan base-package="com"/>
     <context:annotation-config/>
 
+    <bean id="swagger2Config"
+
+                class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration"></bean>
+
+    <mvc:default-servlet-handler />
+
+    <mvc:resources location="classpath:/META-INF/resources/" mapping="swagger-ui.html"></mvc:resources>
+
+    <mvc:resources location="classpath:/META-INF/resources/webjars/"
+
+               mapping="/webjars/**"></mvc:resources>
 
 </beans>

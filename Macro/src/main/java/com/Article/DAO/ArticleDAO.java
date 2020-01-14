@@ -28,7 +28,7 @@ public class ArticleDAO {
         return list;
     }
 
-    public ArticleVO select_one(String article_id){
+    public ArticleVO select_one(int article_id){
         ArticleVO articleVO=new ArticleVO();
         articleVO=sqlSession.selectOne(namespace+".select_one",article_id);
 
@@ -39,7 +39,7 @@ public class ArticleDAO {
         sqlSession.insert(namespace+".insert_article",articleVO);
     }
 
-    public void delete_article(ArticleVO articleVO){ sqlSession.delete(namespace+".delete_article",articleVO.getNickname()); }
+    public void delete_article(ArticleVO articleVO){ sqlSession.delete(namespace+".delete_article",articleVO.getArticle_id()); }
 
     public void update_article(ArticleVO articleVO){}
 
