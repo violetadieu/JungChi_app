@@ -40,7 +40,7 @@ const FirstActivity_StackNavigator = createStackNavigator({
     screen: E1_HOME,
     navigationOptions: ({navigation}) => ({
       title: '국회의원 선거하기',
-      headerLeft: <Election2 navigationProps={navigation} />,
+      headerLeft: () => <Election2 navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#660099',
       },
@@ -55,7 +55,7 @@ const Screen1_StackNavigator = createStackNavigator({
     screen: Search,
     navigationOptions: ({navigation}) => ({
       title: '글 검색',
-      headerLeft: <Election2 navigationProps={navigation} />,
+      headerLeft: () =>  <Election2 navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#660099',
       },
@@ -70,7 +70,7 @@ const Screen2_StackNavigator = createStackNavigator({
     screen: Write,
     navigationOptions: ({navigation}) => ({
       title: '글 작성',
-      headerLeft: <Election2 navigationProps={navigation} />,
+      headerLeft: () => <Election2 navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#660099',
       },

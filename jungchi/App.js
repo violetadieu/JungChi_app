@@ -98,7 +98,7 @@ const FirstActivity_StackNavigator = createStackNavigator({
     screen: MainPage,
     navigationOptions: ({navigation}) => ({
       title: '다람쥐를 국회로',
-      headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+      headerLeft: () =><NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#660099',
       },
@@ -113,7 +113,7 @@ const Screen1_StackNavigator = createStackNavigator({
     screen: Screen1,
     navigationOptions: ({navigation}) => ({
       title: '투표하기',
-      headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+      headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#660099',
       },
@@ -128,7 +128,7 @@ const Screen2_StackNavigator = createStackNavigator({
     screen: Screen2,
     navigationOptions: ({navigation}) => ({
       title: '당별 게시판',
-      headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+      headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#660099',
       },
@@ -143,7 +143,7 @@ const Screen3_StackNavigator = createStackNavigator({
     screen: Screen3,
     navigationOptions: ({navigation}) => ({
       title: '시사 게시판',
-      headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+      headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#660099',
       },
@@ -158,7 +158,7 @@ const Screen4_StackNavigator = createStackNavigator({
     screen: Screen4,
     navigationOptions: ({navigation}) => ({
       title: '자유 게시판',
-      headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+    headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#660099',
       },
@@ -177,7 +177,7 @@ const DrawerNavigator = createDrawerNavigator(
         drawerLabel: 'HOME',
         drawerIcon: ({tintColor}) => (
           <Image
-            source={require('./image/navigation_menu_0.png')}
+            source={require('./image/navigation_menu/navigation_menu_0.png')}
             style={[styles.icon, {tintColor: tintColor}]}
           />
         ),
@@ -190,7 +190,7 @@ const DrawerNavigator = createDrawerNavigator(
         drawerLabel: '투표하기',
         drawerIcon: ({tintColor}) => (
           <Image
-            source={require('./image/navigation_menu_1.png')}
+            source={require('./image/navigation_menu/navigation_menu_1.png')}
             style={[styles.icon, {tintColor: tintColor}]}
           />
         ),
@@ -203,7 +203,7 @@ const DrawerNavigator = createDrawerNavigator(
         drawerLabel: '당별 게시판',
         drawerIcon: ({tintColor}) => (
           <Image
-            source={require('./image/navigation_menu_2.png')}
+            source={require('./image/navigation_menu/navigation_menu_2.png')}
             style={[styles.icon, {tintColor: tintColor}]}
           />
         ),
@@ -216,7 +216,7 @@ const DrawerNavigator = createDrawerNavigator(
         drawerLabel: '시사 게시판',
         drawerIcon: ({tintColor}) => (
           <Image
-            source={require('./image/navigation_menu_3.png')}
+            source={require('./image/navigation_menu/navigation_menu_3.png')}
             style={[styles.icon, {tintColor: tintColor}]}
           />
         ),
@@ -229,7 +229,7 @@ const DrawerNavigator = createDrawerNavigator(
         drawerLabel: '자유 게시판',
         drawerIcon: ({tintColor}) => (
           <Image
-            source={require('./image/navigation_menu_4.png')}
+            source={require('./image/navigation_menu/navigation_menu_4.png')}
             style={[styles.icon, {tintColor: tintColor}]}
           />
         ),
@@ -261,12 +261,12 @@ const DrawerNavigator = createDrawerNavigator(
             backgroundColor: '#9932CC',
             marginBottom: 0,
           }}>
-          <View style={{flexDirection: 'row', width: '100%'}}>
+          <View style={{flexDirection: 'row', width: '100%', alignItems: 'center'}}>
             <Image
               source={require('./image/vote_button.png')}
               style={styles.header_image}
             />
-            <Text>환영합니다.</Text>
+            <Text style={{marginTop: RNU.vh(10)}}>OOO님 반갑습니다.</Text>
           </View>
           <TouchableHighlight
             style={styles.button}
@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginRight: 40,
     marginLeft: 40,
-    marginTop: 20,
+    marginTop: 15,
     paddingTop: 20,
     paddingBottom: 20,
     borderRadius: 10,
@@ -325,7 +325,9 @@ const styles = StyleSheet.create({
     borderRadius: 120 / 2,
     borderColor: '#fff',
     borderWidth: 1,
-    marginLeft: RNU.vw(5),
+    marginLeft: RNU.vw(4),
+    marginRight: RNU.vw(3),
+    marginTop: RNU.vh(0),
     paddingLeft: 0,
   },
 });
