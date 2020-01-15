@@ -15,5 +15,7 @@
         UPDATE`happydaram2`.`member` SET `email`=#{email}, `gender`=#{gender}, `nickname`=#{nickname}, `update_time`=#{update_time}
         WHERE (`social_id` = #{social_id});
     </update>
+
+
 </mapper>
 

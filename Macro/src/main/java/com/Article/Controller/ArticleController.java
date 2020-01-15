@@ -22,7 +22,7 @@ public class ArticleController {
 
     //조회(게시판 타입별)
     //전체
-    @RequestMapping(value = "/read/all", method = RequestMethod.POST)
+    @RequestMapping(value = "/read/all", method = RequestMethod.GET)
     @ResponseBody
     public List<ArticleVO> article_all(){
         List<ArticleVO> list;
@@ -31,7 +31,7 @@ public class ArticleController {
     }
 
     //정당별 게시판 조회
-    @RequestMapping(value = "/read/party", method = RequestMethod.POST)
+    @RequestMapping(value = "/read/party", method = RequestMethod.GET)
     @ResponseBody
     public List<ArticleVO> article_party(@RequestParam("party_id") int party_id){
         List<ArticleVO> list;
@@ -40,7 +40,7 @@ public class ArticleController {
     }
 
     //시사게시판 조회
-    @RequestMapping(value = "/read/sisa",method = RequestMethod.POST)
+    @RequestMapping(value = "/read/sisa",method = RequestMethod.GET)
     @ResponseBody
     public List<ArticleVO> article_sisa(){
         List<ArticleVO> list;
@@ -49,16 +49,24 @@ public class ArticleController {
     }
 
     //자유게시판 조회
-    @RequestMapping(value = "/read/free",method = RequestMethod.POST)
+    @RequestMapping(value = "/read/free",method = RequestMethod.GET)
     @ResponseBody
     public List<ArticleVO> article_free(){
         List<ArticleVO> list;
         list=articleDAO.select_list(99);
         return list;
     }
+    //게시글 하나 조회
+    @RequestMapping(value = "/read/one",method = RequestMethod.GET)
+    @ResponseBody
+    public ArticleVO article_one(@RequestParam("article_id")int article_id){
+        ArticleVO articleVO;
+        articleVO=articleDAO.select_one(article_id);
+        return articleVO;
+    }
 
     //작성
-    @RequestMapping(value = "/write",method = RequestMethod.POST)
+    @RequestMapping(value = "/write",method = RequestMethod.PUT)
     @ResponseBody
     public Map<String,Object> write(@RequestParam("social_id") String social_id,
                                     @RequestParam("article_type") int article_type,
@@ -81,7 +89,7 @@ public class ArticleController {
     }
 
     //수정(수정할 게시글을 불러오기)
-    @RequestMapping(value = "/modify/try",method = RequestMethod.POST)
+    @RequestMapping(value = "/modify/try",method = RequestMethod.GET)
     @ResponseBody
     public List<ArticleVO> modify_try(@RequestParam("article_id") int article_id,@RequestParam("social_id") String social_id){
         ArticleVO articleVO=new ArticleVO();
@@ -100,7 +108,7 @@ public class ArticleController {
     }
 
     //수정(해당 게시글을 수정하기)
-    @RequestMapping(value = "/modify/complete",method = RequestMethod.POST)
+    @RequestMapping(value = "/modify/complete",method = RequestMethod.PUT)
     @ResponseBody
     public List<ArticleVO> modify_complete(@RequestParam("article_id") int article_id,@RequestParam("subject") String subject,
                                            @RequestParam("content") String content, @RequestParam("article_type") int article_type,
@@ -119,7 +127,7 @@ public class ArticleController {
     }
 
     //삭제
-    @RequestMapping(value = "/article/delete",method = RequestMethod.POST)
+    @RequestMapping(value = "/article/delete",method = RequestMethod.DELETE)
     @ResponseBody
     public Map<String,Object> delete(@RequestParam("article_id") int article_id, @RequestParam("social_id")String social_id){
         Map<String, Object> map = new HashMap<String, Object>();
