@@ -3,9 +3,11 @@ package com.Candidate.Controller;
 import com.Article.VO.ArticleVO;
 import com.Candidate.DAO.CandidateDAO;
 import com.Candidate.VO.CandidateVO;
+import com.Candidate.VO.VoteVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,7 +22,7 @@ public class CandidateController {
     CandidateDAO candidateDAO;
 
     //후보 등록
-    @RequestMapping("candidate/regist")
+    @RequestMapping(value = "candidate/regist",method = RequestMethod.PUT)
     @ResponseBody
     public Map<String,Object> regist(@RequestParam("social_id") String social_id,@RequestParam("type")int type,
                                      @RequestParam("commitment")String commitment, @RequestParam("picture")String picture,
@@ -47,7 +49,7 @@ public class CandidateController {
     }
 
     //후보 삭제
-    @RequestMapping("candidate/delete")
+    @RequestMapping(value = "candidate/delete",method = RequestMethod.DELETE)
     @ResponseBody
     public Map<String,Object> delete(@RequestParam("candidate_id") int candidate_id, @RequestParam("social_id")String social_id){
         Map<String, Object> map = new HashMap<String, Object>();
@@ -75,19 +77,34 @@ public class CandidateController {
     }
 
     //후보 조회(리스트)
-    @RequestMapping("candidate/read")
+    @RequestMapping(value = "candidate/read", method = RequestMethod.GET)
     @ResponseBody
-    public List<CandidateVO> read_candidate(@RequestParam("candidate_id")int candidate_id,@RequestParam("type")int type){
+    public List<CandidateVO> read_candidate(@RequestParam("type")int type){
         return candidateDAO.select_candidate_list(type);
-    }/*
-    //후보 투표(찬, 반)
-    @RequestMapping("election/agree")
-    public Map<String,Object> agree(){
-
     }
 
-    @RequestMapping("election/disagree")
-    public Map<String,Object> disagree(){
+    //후보 조회(상세정보)
+    @RequestMapping(value = "candidate/read/one",method = RequestMethod.GET)
+    @ResponseBody
+    public CandidateVO read_candidate_one(@RequestParam("candidate_id") int candidate_id){
+        return candidateDAO.select_candidate(candidate_id);
+    }
+    //후보 투표(찬, 반)
+    @RequestMapping(value = "election/agree",method = RequestMethod.PUT)
+    public void agree(@RequestParam("candidate_id") int candidate_id,@RequestParam("social_id")String social_id){
+        VoteVO voteVO=new VoteVO(candidate_id,social_id);
+        if(candidateDAO.check_vote(voteVO))
+            candidateDAO.agreement(candidate_id);
+        else
+            return;
+    }
 
-    }*/
+    @RequestMapping(value = "election/disagree",method = RequestMethod.PUT)
+    public void disagree(@RequestParam("candidate_id") int candidate_id,@RequestParam("social_id")String social_id){
+        VoteVO voteVO=new VoteVO(candidate_id,social_id);
+        if(candidateDAO.check_vote(voteVO))
+            candidateDAO.disagreement(candidate_id);
+        else
+            return;
+    }
 }

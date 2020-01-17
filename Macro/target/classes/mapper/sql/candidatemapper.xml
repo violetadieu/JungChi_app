@@ -21,4 +21,5 @@
     <delete id="delete_candidate" parameterType="CandidateVO">
         DELETE from happydaram2.candidate where candidate_id=#{candidate_id};
     </delete>
+
 </mapper>
