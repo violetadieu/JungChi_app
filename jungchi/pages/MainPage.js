@@ -38,6 +38,9 @@ export default class MainPage extends Component {
       });
   };
 
+  getImg = () => {
+    axios.get('http://happydaram2.cafe24.com');
+  };
   render() {
     return (
       <View style={styles.MainContainer}>
@@ -46,14 +49,22 @@ export default class MainPage extends Component {
           <Button
             title="KaKao"
             onPress={() => {
-              Linking.openURL('http://happydaram2.cafe24.com/?login=kakao');
+              Linking.openURL(
+                'http://happydaram2.cafe24.com/?login=kakao & id = ',
+              );
             }}
           />
-
           <Button
             title="Naver"
             onPress={() => {
-              console.log('naver');
+              console.log(this.state.url);
+            }}
+          />
+          <Button
+            title="text"
+            onPress={() => {
+              this.props.navigation.setParams(('ffff': 'aaa'));
+              this.props.navigation.navigate('Screen4');
             }}
           />
         </TouchableOpacity>

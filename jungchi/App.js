@@ -16,13 +16,14 @@ import {
   StyleSheet,
   ToastAndroid,
   BackHandler,
-  Button,
-  ImageBackground,
+  StatusBar,
   TouchableHighlight,
+  Alert,
 } from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import {createDrawerNavigator, DrawerItems} from 'react-navigation-drawer';
 import {createStackNavigator} from 'react-navigation-stack';
+import KakaoLogins from '@react-native-seoul/kakao-login';
 import RNU from 'react-native-units';
 
 import MainPage from './pages/MainPage';
@@ -30,13 +31,31 @@ import Screen1 from './pages/Screen1';
 import Screen2 from './pages/Screen2';
 import Screen3 from './pages/Screen3';
 import Screen4 from './pages/Screen4';
+import Login from './pages/Login';
 
 import Election1 from './pages/election/Election1';
 import Election2 from './pages/election/Election2';
+import P_Board from './pages/party_board/P_Board';
 
+let login_success = false;
+let login_kakao = false;
+let kakao_nickname = '';
 class NavigationDrawerStructure extends Component {
   constructor(props) {
     super(props);
+    KakaoLogins.getProfile((err, result) => {
+      if (err) {
+        login_success = false;
+        login_kakao = false;
+        kakao_nickname = JSON.stringify(result.nickname);
+        console.log('nickname: ' + kakao_nickname);
+        console.log('login-failed');
+        return;
+      }
+      login_success = true;
+      login_kakao = true;
+      console.log('login-success');
+    });
   }
 
   // 이벤트 등록
@@ -54,7 +73,10 @@ class NavigationDrawerStructure extends Component {
   handleBackButton = () => {
     // 2000(2초) 안에 back 버튼을 한번 더 클릭 할 경우 앱 종료
     if (this.exitApp == undefined || !this.exitApp) {
-      ToastAndroid.show('한번 더 누르시면 종료됩니다.', ToastAndroid.SHORT);
+      ToastAndroid.show(
+        "'뒤로' 버튼을 한 번 더 누르면 종료됩니다.",
+        ToastAndroid.SHORT,
+      );
       this.exitApp = true;
 
       this.timeout = setTimeout(
@@ -77,13 +99,15 @@ class NavigationDrawerStructure extends Component {
 
     this.props.navigationProps.toggleDrawer();
   };
+
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar backgroundColor="#660099" />
         <TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
           {/*Donute Button Image */}
           <Image
-            source={require('./image/drawer.png')}
+            source={require('./assets/images/drawer.png')}
             style={{width: 30, height: 30, marginLeft: 12}}
           />
         </TouchableOpacity>
@@ -98,7 +122,9 @@ const FirstActivity_StackNavigator = createStackNavigator({
     screen: MainPage,
     navigationOptions: ({navigation}) => ({
       title: '다람쥐를 국회로',
-      headerLeft: () =><NavigationDrawerStructure navigationProps={navigation} />,
+      headerLeft: () => (
+        <NavigationDrawerStructure navigationProps={navigation} />
+      ),
       headerStyle: {
         backgroundColor: '#660099',
       },
@@ -113,7 +139,9 @@ const Screen1_StackNavigator = createStackNavigator({
     screen: Screen1,
     navigationOptions: ({navigation}) => ({
       title: '투표하기',
-      headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />,
+      headerLeft: () => (
+        <NavigationDrawerStructure navigationProps={navigation} />
+      ),
       headerStyle: {
         backgroundColor: '#660099',
       },
@@ -128,7 +156,9 @@ const Screen2_StackNavigator = createStackNavigator({
     screen: Screen2,
     navigationOptions: ({navigation}) => ({
       title: '당별 게시판',
-      headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />,
+      headerLeft: () => (
+        <NavigationDrawerStructure navigationProps={navigation} />
+      ),
       headerStyle: {
         backgroundColor: '#660099',
       },
@@ -143,7 +173,9 @@ const Screen3_StackNavigator = createStackNavigator({
     screen: Screen3,
     navigationOptions: ({navigation}) => ({
       title: '시사 게시판',
-      headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />,
+      headerLeft: () => (
+        <NavigationDrawerStructure navigationProps={navigation} />
+      ),
       headerStyle: {
         backgroundColor: '#660099',
       },
@@ -158,7 +190,9 @@ const Screen4_StackNavigator = createStackNavigator({
     screen: Screen4,
     navigationOptions: ({navigation}) => ({
       title: '자유 게시판',
-    headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />,
+      headerLeft: () => (
+        <NavigationDrawerStructure navigationProps={navigation} />
+      ),
       headerStyle: {
         backgroundColor: '#660099',
       },
@@ -166,6 +200,28 @@ const Screen4_StackNavigator = createStackNavigator({
     }),
   },
 });
+
+const Login_StackNavigator = createStackNavigator(
+  {
+    Fourth: {
+      screen: Login,
+      // navigationOptions: ({navigation}) => ({
+      //   title: '로그인',
+      //   headerLeft: () => (
+      //     <NavigationDrawerStructure navigationProps={navigation} />
+      //   ),
+      //   headerStyle: {
+      //     backgroundColor: '#660099',
+      //   },
+      //   headerTintColor: '#fff',
+      // }),
+    },
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
+  },
+);
 
 const DrawerNavigator = createDrawerNavigator(
   {
@@ -177,7 +233,7 @@ const DrawerNavigator = createDrawerNavigator(
         drawerLabel: 'HOME',
         drawerIcon: ({tintColor}) => (
           <Image
-            source={require('./image/navigation_menu/navigation_menu_0.png')}
+            source={require('./assets/images/navigation_menu/navigation_menu_0.png')}
             style={[styles.icon, {tintColor: tintColor}]}
           />
         ),
@@ -190,7 +246,7 @@ const DrawerNavigator = createDrawerNavigator(
         drawerLabel: '투표하기',
         drawerIcon: ({tintColor}) => (
           <Image
-            source={require('./image/navigation_menu/navigation_menu_1.png')}
+            source={require('./assets/images/navigation_menu/navigation_menu_1.png')}
             style={[styles.icon, {tintColor: tintColor}]}
           />
         ),
@@ -203,7 +259,7 @@ const DrawerNavigator = createDrawerNavigator(
         drawerLabel: '당별 게시판',
         drawerIcon: ({tintColor}) => (
           <Image
-            source={require('./image/navigation_menu/navigation_menu_2.png')}
+            source={require('./assets/images/navigation_menu/navigation_menu_2.png')}
             style={[styles.icon, {tintColor: tintColor}]}
           />
         ),
@@ -216,7 +272,7 @@ const DrawerNavigator = createDrawerNavigator(
         drawerLabel: '시사 게시판',
         drawerIcon: ({tintColor}) => (
           <Image
-            source={require('./image/navigation_menu/navigation_menu_3.png')}
+            source={require('./assets/images/navigation_menu/navigation_menu_3.png')}
             style={[styles.icon, {tintColor: tintColor}]}
           />
         ),
@@ -229,7 +285,7 @@ const DrawerNavigator = createDrawerNavigator(
         drawerLabel: '자유 게시판',
         drawerIcon: ({tintColor}) => (
           <Image
-            source={require('./image/navigation_menu/navigation_menu_4.png')}
+            source={require('./assets/images/navigation_menu/navigation_menu_4.png')}
             style={[styles.icon, {tintColor: tintColor}]}
           />
         ),
@@ -244,46 +300,119 @@ const DrawerNavigator = createDrawerNavigator(
     },
     Election2: {
       screen: Election2,
+      displayBoard: false,
       navigationOptions: {
         drawerLabel: () => null,
         drawerLockMode: 'locked-closed',
+      },
+    },
+    P_Board: {
+      screen: P_Board,
+      navigationOptions: {
+        //        drawerLabel: () => null,
+        drawerLockMode: 'locked-closed',
+      },
+    },
+    Login: {
+      screen: Login_StackNavigator,
+      navigationOptions: {
+        drawerLabel: () => null,
+        //drawerLockMode: 'locked-closed',
       },
     },
   },
   {
     contentComponent: props => (
       <SafeAreaView style={styles.container}>
-        <View
-          style={{
-            height: 200,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#9932CC',
-            marginBottom: 0,
-          }}>
-          <View style={{flexDirection: 'row', width: '100%', alignItems: 'center'}}>
-            <Image
-              source={require('./image/vote_button.png')}
-              style={styles.header_image}
-            />
-            <Text style={{marginTop: RNU.vh(10)}}>OOO님 반갑습니다.</Text>
-          </View>
-          <TouchableHighlight
-            style={styles.button}
-            onPress={() => {
-              console.log('hi');
-            }}
-            underlayColor="#9932cc">
-            <Text
+        {login_success ? (
+          <View
+            style={{
+              height: 200,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#9932CC',
+              marginBottom: 0,
+            }}>
+            <View
               style={{
-                color: '#fff',
-                textAlign: 'center',
-                fontSize: RNU.px(40),
+                flexDirection: 'row',
+                width: '100%',
+                alignItems: 'center',
               }}>
-              로그인하기
-            </Text>
-          </TouchableHighlight>
-        </View>
+              <Image
+                source={require('./assets/images/button/vote_button.png')}
+                style={styles.header_image}
+              />
+              <Text style={{marginTop: RNU.vh(10)}}>
+                {kakao_nickname}님 반갑습니다.
+              </Text>
+            </View>
+            <TouchableHighlight
+              style={styles.button}
+              onPress={() => {
+                login_success = false;
+                if (login_kakao === true) {
+                  KakaoLogins.logout((err, result) => {
+                    if (err) {
+                      Alert.alert('error', err.toString());
+                      return;
+                    }
+                    Alert.alert('logout!', JSON.stringify(result));
+                    console.log(props.navigation.toggleDrawer());
+                  });
+                }
+              }}
+              underlayColor="#9932cc">
+              <Text
+                style={{
+                  color: '#fff',
+                  textAlign: 'center',
+                  fontSize: RNU.px(40),
+                }}>
+                로그아웃
+              </Text>
+            </TouchableHighlight>
+          </View>
+        ) : (
+          <View
+            style={{
+              height: 200,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#9932CC',
+              marginBottom: 0,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '100%',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('./assets/images/button/vote_button.png')}
+                style={styles.header_image}
+              />
+              <Text style={{marginTop: RNU.vh(10)}}>로그인 해주세요.</Text>
+            </View>
+            <TouchableHighlight
+              style={styles.button}
+              onPress={() => {
+                login_success = true;
+                login_kakao = true;
+                props.navigation.navigate('Login');
+              }}
+              underlayColor="#9932cc">
+              <Text
+                style={{
+                  color: '#fff',
+                  textAlign: 'center',
+                  fontSize: RNU.px(40),
+                }}>
+                로그인하기
+              </Text>
+            </TouchableHighlight>
+          </View>
+        )}
         <ScrollView>
           <DrawerItems {...props} />
         </ScrollView>
