@@ -8,6 +8,7 @@ import com.Member.MemberVO;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +42,7 @@ public class LoginController {
     MemberVO member_sample=new MemberVO();
 
     @RequestMapping(value="/login_kakao")
-    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
     public String login_kakao(@RequestParam("code") String code) {
         Map<String, Object> map = new HashMap<String, Object>();
         //1. 접근 토큰 생성
@@ -55,19 +56,20 @@ public class LoginController {
         //받아온 유저정보를 객체화
         member_sample=kakaoDAO.member_parse(userInfo);
         //현재 db에 해당 회원이 있는지 확인
-        if(kakaoDAO.member_exist(member_sample)==false){
+        if(!kakaoDAO.member_exist(member_sample)){
             //없으면 신규 등록
             kakaoDAO.member_insert(member_sample);
-            map.put("result","insert");
+            session.setAttribute("result","insert");
         }
         else {
             //있으면 마지막 접속일자 갱신(update_time)
             kakaoDAO.member_update(member_sample);
-            map.put("result","login");
+            session.setAttribute("result","login");
         }
-        return null;
+        session.setAttribute("member",member_sample);
+        return "home";
     }
-
+/*
     @RequestMapping("/login_naver")
     public String login_naver(@RequestParam("code") String code,@RequestParam("state") String state){
         //1. 접근 토큰 생성
@@ -90,7 +92,7 @@ public class LoginController {
 
         return "home";
     }
-
+*/
 
     //메인 페이지
     @RequestMapping("/")
@@ -100,15 +102,15 @@ public class LoginController {
         session.setAttribute("status_token",status_Token);
 
         //카카오, 네이버 url 생성
-        String kakao_login_url="https://kauth.kakao.com/oauth/authorize?client_id=aae08713ac0b0defdd5018d5f6674ace&redirect_uri=http://localhost:8080/Macro_war_exploded/login_kakao&response_type=code";
-        String naver_login_url= "https://nid.naver.com/oauth2.0/authorize?client_id=eApd6IlHKyRNuqFJiyHe&response_type=code&redirect_uri=http://localhost:8080/Macro_war_exploded/login_naver&state="+status_Token;
+        String kakao_login_url="https://kauth.kakao.com/oauth/authorize?client_id=aae08713ac0b0defdd5018d5f6674ace&redirect_uri=http://happydaram2.cafe24.com/login_kakao&response_type=code";
+        //String naver_login_url= "https://nid.naver.com/oauth2.0/authorize?client_id=eApd6IlHKyRNuqFJiyHe&response_type=code&redirect_uri=http://localhost:8080/Macro_war_exploded/login_naver&state="+status_Token;
 
         //redirect
         if(login.equals("kakao")){
             return "redirect:"+kakao_login_url;
         }
         else if(login.equals("naver")){
-            return "redirect:"+naver_login_url;
+            //return "redirect:"+naver_login_url;
         }
 
         return null;

@@ -12,14 +12,6 @@ public class ArticleVO {
     Calendar cal = Calendar.getInstance();
     String today = formatter.format(cal.getTime());
 
-    public String getSocial_id() {
-        return social_id;
-    }
-
-    public void setSocial_id(String social_id) {
-        this.social_id = social_id;
-    }
-
     String social_id;
     int article_id;
     int article_type;
@@ -41,7 +33,13 @@ public class ArticleVO {
         this.social_id=social_id;
         this.article_picture=article_picture;
     }
+    public String getSocial_id() {
+        return social_id;
+    }
 
+    public void setSocial_id(String social_id) {
+        this.social_id = social_id;
+    }
     public String getArticle_picture() {
         return article_picture;
     }
