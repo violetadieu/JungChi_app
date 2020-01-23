@@ -16,6 +16,9 @@ import {
   StyleSheet,
   ToastAndroid,
   BackHandler,
+  Button,
+  ImageBackground,
+  TouchableHighlight,
 } from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import {createDrawerNavigator, DrawerItems} from 'react-navigation-drawer';
@@ -23,6 +26,7 @@ import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {createStackNavigator} from 'react-navigation-stack';
 import RNU from 'react-native-units';
 
+import ProgressiveImage from './progressive-image';
 import MainPage from './pages/MainPage';
 import Screen1 from './pages/Screen1';
 import Screen2 from './pages/Screen2';
@@ -252,23 +256,35 @@ const DrawerNavigator = createDrawerNavigator(
     contentComponent: props => (
       <SafeAreaView style={styles.container}>
         <View
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{height: 150, alignItems: 'center', justifyContent: 'center'}}>
-          <Image
-            source={require('./image/navigation_header.png')}
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={{
-              flex: 1,
-              flexDirection: 'column',
-              height: 100,
-              marginLeft: 0,
-              alignItems: 'center',
-              width: RNU.gs(28),
+          style={{
+            height: 200,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#9932CC',
+            marginBottom: 0,
+          }}>
+          <View style={{flexDirection: 'row', width: '100%'}}>
+            <Image
+              source={require('./image/vote_button.png')}
+              style={styles.header_image}
+            />
+            <Text>환영합니다.</Text>
+          </View>
+          <TouchableHighlight
+            style={styles.button}
+            onPress={() => {
+              console.log('hi');
             }}
-          />
-          <Text style={{position: 'absolute', fontSize: 30, color: 'white'}}>
-            환영합니다
-          </Text>
+            underlayColor="#9932cc">
+            <Text
+              style={{
+                color: '#fff',
+                textAlign: 'center',
+                fontSize: RNU.px(40),
+              }}>
+              로그인하기
+            </Text>
+          </TouchableHighlight>
         </View>
         <ScrollView>
           <DrawerItems {...props} />
@@ -289,6 +305,30 @@ const styles = StyleSheet.create({
     height: 24,
     marginLeft: 40,
     marginRight: 30,
+  },
+  button: {
+    backgroundColor: '#9932cc',
+    overflow: 'hidden',
+    marginRight: 40,
+    marginLeft: 40,
+    marginTop: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#fff',
+    width: '80%',
+    height: '15%',
+    justifyContent: 'center',
+  },
+  header_image: {
+    width: 120,
+    height: 120,
+    borderRadius: 120 / 2,
+    borderColor: '#fff',
+    borderWidth: 1,
+    marginLeft: RNU.vw(5),
+    paddingLeft: 0,
   },
 });
 
