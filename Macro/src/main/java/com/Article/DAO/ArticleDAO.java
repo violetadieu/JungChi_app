@@ -35,12 +35,23 @@ public class ArticleDAO {
         return articleVO;
     }
 
+    public ArticleVO select_comment(ArticleVO articleVO){
+        articleVO.setCommentlist(sqlSession.selectList(namespace+".select_comment",articleVO.getArticle_id()));
+        return articleVO;
+    }
+
     public void insert_article(ArticleVO articleVO){
         sqlSession.insert(namespace+".insert_article",articleVO);
     }
 
     public void delete_article(ArticleVO articleVO){ sqlSession.delete(namespace+".delete_article",articleVO.getArticle_id()); }
 
-    public void update_article(ArticleVO articleVO){}
+    public void update_article(ArticleVO articleVO){sqlSession.update(namespace+".update_article",articleVO);}
+
+    public void recommend_article(int article_id){sqlSession.update(namespace+".recommend_article",article_id);}
+
+    public void non_recommend_article(int article_id){sqlSession.update(namespace+".non_recommend_article",article_id);}
+
+    public void hit(int article_id){sqlSession.update(namespace+".hit",article_id);}
 
 }

@@ -7,5 +7,6 @@
         <package name="com.Member"/>
         <package name="com.Article"/>
         <package name="com.Candidate"/>
+        <package name="com.Comment"/>
     </typeAliases>
 </configuration>

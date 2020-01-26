@@ -1,10 +1,12 @@
 package com.Article.VO;
 
-import org.springframework.web.bind.annotation.RequestParam;
+import com.Comment.VO.CommentVO;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class ArticleVO {
     //업데이트 시간(현재시간)
@@ -24,6 +26,11 @@ public class ArticleVO {
     String nickname;
     Timestamp create_time;
     Timestamp update_time=Timestamp.valueOf(today);
+
+    List<CommentVO> commentlist=new ArrayList<CommentVO>() {
+
+    };
+    int comment_size=0;
 
     public void setArticleVO(String social_id,String subject,String content,int article_type,String nickname,String article_picture){
         this.subject=subject;
@@ -126,6 +133,18 @@ public class ArticleVO {
 
     public void setUpdate_time(Timestamp update_time) {
         this.update_time = update_time;
+    }
+
+    public List<CommentVO> getCommentlist() {
+        return commentlist;
+    }
+
+    public void setCommentlist(List<CommentVO> commentlist) {
+        this.commentlist=commentlist;
+    }
+
+    public int getComment_size() {
+        return this.commentlist.size();
     }
 
 }

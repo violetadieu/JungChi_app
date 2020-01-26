@@ -62,11 +62,13 @@ public class ArticleController {
     public ArticleVO article_one(@RequestParam("article_id")int article_id){
         ArticleVO articleVO;
         articleVO=articleDAO.select_one(article_id);
+        articleVO=articleDAO.select_comment(articleVO);
+        articleDAO.hit(article_id);
         return articleVO;
     }
 
     //작성
-    @RequestMapping(value = "/write",method = RequestMethod.PUT)
+    @RequestMapping(value = "/article/write",method = RequestMethod.PUT)
     @ResponseBody
     public Map<String,Object> write(@RequestParam("social_id") String social_id,
                                     @RequestParam("article_type") int article_type,
@@ -80,20 +82,19 @@ public class ArticleController {
         articleVO.setArticleVO(social_id,subject, content, article_type, nickname,article_picture);
         try {
             articleDAO.insert_article(articleVO);
-            throw new Exception();
+            map.put("result","complete");
         } catch (Exception e) {
+            map.put("result","fail");
             e.printStackTrace();
         }
-        map.put("result","complete");
         return map;
     }
 
     //수정(수정할 게시글을 불러오기)
     @RequestMapping(value = "/modify/try",method = RequestMethod.GET)
     @ResponseBody
-    public List<ArticleVO> modify_try(@RequestParam("article_id") int article_id,@RequestParam("social_id") String social_id){
+    public ArticleVO modify_try(@RequestParam("article_id") int article_id,@RequestParam("social_id") String social_id){
         ArticleVO articleVO=new ArticleVO();
-        List<ArticleVO> list=null;
         try {
             articleVO=articleDAO.select_one(article_id);
             throw new Exception();
@@ -103,27 +104,28 @@ public class ArticleController {
         if(!articleVO.getSocial_id().equals(social_id)){//본인의 게시물이 아닌경우
             return null;
         }
-        list.add(articleVO);
-        return list;
+        return articleVO;
     }
 
     //수정(해당 게시글을 수정하기)
     @RequestMapping(value = "/modify/complete",method = RequestMethod.PUT)
     @ResponseBody
-    public List<ArticleVO> modify_complete(@RequestParam("article_id") int article_id,@RequestParam("subject") String subject,
+    public Map<String,Object> modify_complete(@RequestParam("article_id") int article_id,@RequestParam("subject") String subject,
                                            @RequestParam("content") String content, @RequestParam("article_type") int article_type,
                                            @RequestParam("nickname") String nickname, @RequestParam("social_id") String social_id,
                                            @RequestParam("article_picture")String article_picture){
+        Map<String, Object> map = new HashMap<String, Object>();
         ArticleVO articleVO=new ArticleVO();
-        List<ArticleVO> list=null;
+        articleVO.setArticleVO(social_id,subject, content, article_type, nickname,article_picture);
         try {
-            articleVO=articleDAO.select_one(article_id);
+            articleDAO.update_article(articleVO);
+            map.put("result","success");
             throw new Exception();
         } catch (Exception e) {
+            map.put("result","fail");
             e.printStackTrace();
         }
-        list.add(articleVO);
-        return list;
+        return map;
     }
 
     //삭제
@@ -144,13 +146,44 @@ public class ArticleController {
         else {
             try {
                 articleDAO.delete_article(articleVO);
+                map.put("result","success");
                 throw new Exception();
             } catch (Exception e) {
+                map.put("result","fail");
                 e.printStackTrace();
             }
-            map.put("result","success");
         }
 
         return map;
     }
+
+    @RequestMapping(value = "/article/recommend",method = RequestMethod.PATCH)
+    @ResponseBody
+    public Map<String,Object> recommend(@RequestParam("article_id") int article_id) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            articleDAO.recommend_article(article_id);
+            map.put("result","success");
+        } catch (Exception e) {
+            map.put("result","fail");
+            e.printStackTrace();
+        }
+        return map;
+    }
+
+    @RequestMapping(value = "/article/non_recommend",method = RequestMethod.PATCH)
+    @ResponseBody
+    public Map<String,Object> non_recommend(@RequestParam("article_id") int article_id) {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        try {
+            articleDAO.non_recommend_article(article_id);
+            map.put("result","success");
+        } catch (Exception e) {
+            map.put("result","fail");
+            e.printStackTrace();
+        }
+        return map;
+    }
+
 }
