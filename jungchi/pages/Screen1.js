@@ -39,7 +39,7 @@ export default class Screen1 extends Component {
             onPress={() => this.props.navigation.navigate('Election1')}>
             <Image
               style={styles.Button}
-              source={require('../image/vote_button.png')}
+              source={require('../assets/images/button/vote_button.png')}
             />
           </TouchableOpacity>
           <View
@@ -61,7 +61,7 @@ export default class Screen1 extends Component {
             onPress={() => this.props.navigation.navigate('Election2')}>
             <Image
               style={styles.Button}
-              source={require('../image/vote_button.png')}
+              source={require('../assets/images/button/vote_button.png')}
             />
           </TouchableOpacity>
           <View

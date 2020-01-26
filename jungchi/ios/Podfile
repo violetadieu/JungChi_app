@@ -36,6 +36,10 @@ target 'jungchi' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
+  pod 'RNKeychain', :path => '../node_modules/react-native-keychain'
+
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'jungchiTests' do
     inherit! :search_paths
     # Pods for testing
