@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Comment">
+
+    <insert id="comment_insert" parameterType="CommentVO">
+        INSERT INTO `happydaram2`.`comment` (`social_id`,`nickname`,`content`,`article_id`,`candidate_id`)
+            VALUES (#{social_id},#{nickname},#{content},#{article_id},#{candidate_id});
+    </insert>
+
+    <update id="comment_update" parameterType="int">
+        UPDATE happydaram2.article SET comment_size = comment_size+1 WHERE (`article_id` = #{article_id});
+    </update>
+
+</mapper>

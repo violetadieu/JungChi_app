@@ -16,16 +16,36 @@
         SELECT * FROM happydaram2.article WHERE article_id=#{article_id}
     </select>
 
-    <insert id="insert_article" parameterType="ArticleVO">
-        INSERT INTO `happydaram2`.`article` (`subject`, `content`, `recommend`, `non_recommend`, `article_type`, `hit`, `nickname`,`social_id`)
-        VALUES (#{subject}, #{content},'0', '0', #{article_type}, '0', #{nickname},#{social_id});
-    </insert>
+    <select id="select_comment" resultType="CommentVO" parameterType="int">
+        SELECT * FROM happydaram2.comment WHERE article_id=#{article_id}
+    </select>
+
+    <select id="search_article" resultType="ArticleVO" parameterType="String">
+        SELECT * FROM happydaram2.article WHERE subject LIKE #{keyword};
+    </select>
+
+    <update id="recommend_article" parameterType="int">
+        UPDATE happydaram2.article SET recommend = recommend+1 WHERE (`article_id` = #{article_id});
+    </update>
+
+    <update id="non_recommend_article" parameterType="int">
+        UPDATE happydaram2.article SET non_recommend = non_recommend+1 WHERE (`article_id` = #{article_id});
+    </update>
 
     <update id="update_article" parameterType="ArticleVO">
         UPDATE `happydaram2`.`article` SET `subject` = #{subject}, `content` = #{content}, `article_type` = #{article_type},`article_picture` = #{article_picture}
         WHERE article_id=#{article_id};
 
     </update>
+
+    <update id="hit" parameterType="int">
+                UPDATE happydaram2.article SET hit = hit+1 WHERE (`article_id` = #{article_id});
+    </update>
+
+    <insert id="insert_article" parameterType="ArticleVO">
+        INSERT INTO `happydaram2`.`article` (`subject`, `content`, `recommend`, `non_recommend`, `article_type`, `hit`, `nickname`,`social_id`,`comment_size`)
+        VALUES (#{subject}, #{content},'0', '0', #{article_type}, '0', #{nickname},#{social_id},'0');
+    </insert>
 
     <delete id="delete_article"  parameterType="int">
         DELETE FROM `happydaram2`.`article` WHERE article_id=#{article_id};

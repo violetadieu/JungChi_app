@@ -24,11 +24,11 @@ public class MemberVO {
     int party_id;
     int area_id;
 
-    public void setMemberVO(String id,String nickname, String email,String gender){
+    public void setMemberVO(String id,String nickname, String email,String picture){
         this.social_id=id;
         this.nickname=nickname;
         this.email=email;
-        this.gender=gender;
+        this.picture=picture;
     }
     public String getSocial_id() {
         return social_id;
