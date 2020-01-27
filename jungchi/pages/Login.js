@@ -32,8 +32,8 @@ export default class Login extends Component {
         Alert.alert('error', err.toString());
         return;
       }
-      this.props.navigation.goBack(null);
-      //Alert.alert('login!', JSON.stringify(result));
+      Alert.alert('result', result.refreshTokenExpiresAt);
+      //this.props.navigation.goBack(null);
     });
   };
 
@@ -53,7 +53,7 @@ export default class Login extends Component {
         Alert.alert('error', err.toString());
         return;
       }
-      Alert.alert("user's profile", JSON.stringify(result));
+      console.log(result);
     });
   };
 
