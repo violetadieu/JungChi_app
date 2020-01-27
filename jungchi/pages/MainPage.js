@@ -49,9 +49,7 @@ export default class MainPage extends Component {
           <Button
             title="KaKao"
             onPress={() => {
-              Linking.openURL(
-                'http://happydaram2.cafe24.com/?login=kakao & id = ',
-              );
+              this.props.navigation.navigate('Login');
             }}
           />
           <Button

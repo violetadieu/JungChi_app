@@ -59,7 +59,7 @@ export default class Screen4 extends Component {
     this.setState({isWriteVisible: !this.state.isWriteVisible});
   };
   write = () => {
-    let put_url = 'http://happydaram2.cafe24.com/write?';
+    let put_url = 'http://happydaram2.cafe24.com/article/write?';
 
     let social_id = 'kakao01';
     let article_type = '1';
