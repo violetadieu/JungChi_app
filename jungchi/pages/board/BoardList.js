@@ -6,14 +6,24 @@ import {
   StyleSheet,
   RefreshControl,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import axios from 'axios';
 import BoardListItem from './BoardListItem';
-import BoardButton from './BoardButton';
+import {NavigationService} from './';
+
+import ActionButton from 'react-native-action-button';
+import AwesomeButton from 'react-native-really-awesome-button';
+import Toast from 'react-native-root-toast';
+import SearchIcon from 'react-native-vector-icons/FontAwesome';
+import WriteIcon from 'react-native-vector-icons/FontAwesome5';
 
 export default class BoardList extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      refreshing: false,
+    };
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick() {
@@ -23,7 +33,6 @@ export default class BoardList extends Component {
   state = {
     data: [],
     isLoading: false,
-    refreshing: false,
   };
 
   componentDidMount() {
@@ -32,8 +41,9 @@ export default class BoardList extends Component {
 
   getPostData = async () => {
     const data = await this.callPostData();
+
     this.setState({
-      data: data,
+      data: data.reverse(),
       isLoading: true,
       refreshing: false,
     });
@@ -58,7 +68,26 @@ export default class BoardList extends Component {
   render() {
     return (
       <View style={styles.MainContainer}>
-        <ScrollView
+        <ActionButton
+          buttonColor="rgba(231,76,60,1)"
+          hideShadow={true}
+          style={{position: 'absolute', zIndex: 999}}>
+          <ActionButton.Item
+            buttonColor="#9b59b6"
+            title="새로운 글쓰기"
+            onPress={() => NavigationService.navigate('BoardWrite')}>
+            <WriteIcon name="pen" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item
+            buttonColor="#3498db"
+            title="검색하기"
+            onPress={() =>
+              console.log(this.props.navigation.getParam('aaa', 'nono'))
+            }>
+            <SearchIcon name="search" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+        </ActionButton>
+        {/* <ScrollView
           style={styles.cardContainer}
           refreshControl={
             <RefreshControl
@@ -70,10 +99,39 @@ export default class BoardList extends Component {
             .slice(0)
             .reverse()
             .map((data, key) => {
-              return <BoardListItem data={data} key={key} />;
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    NavigationService.navigate('BoardRead', {
+                      data: data,
+                    });
+                  }}
+                  activeOpacity={0.3}>
+                  <BoardListItem data={data} key={key} />
+                </TouchableOpacity>
+              );
             })}
-        </ScrollView>
-        <BoardButton />
+        </ScrollView> */}
+        <FlatList
+          data={this.state.data}
+          showsVerticalScrollIndicator={false}
+          refreshing={this.state.refreshing}
+          onRefresh={this.onRefresh.bind(this)}
+          keyExtractor={(item, key) => key.toString()}
+          renderItem={({item}) => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  NavigationService.navigate('BoardRead', {
+                    data: item,
+                  });
+                }}
+                activeOpacity={0.3}>
+                <BoardListItem data={item} />
+              </TouchableOpacity>
+            );
+          }}
+        />
       </View>
     );
   }
@@ -95,5 +153,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 'center',
+  },
+  actionButtonIcon: {
+    fontSize: 18,
+    height: 22,
+    color: 'white',
   },
 });

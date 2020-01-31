@@ -4,36 +4,6 @@ import RNU from 'react-native-units';
 import Modal from 'react-native-modal';
 import Thumbs_up from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
-function getTimestampToDate(timeStamp) {
-  var stamp = new Date(timeStamp);
-  var today = new Date();
-
-  var year = today.getFullYear().toString();
-  var month = (today.getMonth() + 1).toString();
-  var day = today.getDate().toString();
-  if (month.length < 2) month = '0' + month;
-  if (day.length < 2) day = '0' + day;
-  var today_date = year + month + day;
-
-  year = stamp.getFullYear().toString();
-  month = (stamp.getMonth() + 1).toString();
-  day = stamp.getDate().toString();
-  if (month.length < 2) month = '0' + month;
-  if (day.length < 2) day = '0' + day;
-  var stamp_date = year + month + day;
-
-  if (stamp_date === today_date) {
-    var h = stamp.getHours().toString();
-    var m = stamp.getMinutes().toString();
-
-    if (h.length < 2) h = '0' + h;
-    if (m.length < 2) m = '0' + m;
-
-    return h + ':' + m;
-  } else {
-    return month + '.' + day;
-  }
-}
 
 class Item extends Component {
   state = {
@@ -57,35 +27,39 @@ class Item extends Component {
   };
   render() {
     return (
-      <TouchableOpacity onPress={this.toggleModal} activeOpacity={0.3}>
-        <View style={styles.CardContainer}>
-          <View style={{flex: 1}}>
-            <Thumbs_up name="thumbs-o-up" style={styles.Icon} />
-            <Text style={styles.Text}>{this.props.data.recommend}</Text>
+      <View style={styles.CardContainer}>
+        <View style={{flex: 6, marginBottom: 10, marginLeft: 5}}>
+          <View style={styles.SubContainer}>
+            <Text style={styles.CardTitle}>{this.props.data.subject}</Text>
           </View>
 
-          <View style={{flex: 6}}>
-            <View style={styles.SubContainer}>
-              <Text style={styles.CardTitle}>{this.props.data.subject}</Text>
-            </View>
+          <View style={styles.SubContainer2}>
+            <Text style={styles.SubText}> {this.props.data.nickname}</Text>
+            <Text style={{color: 'rgba(1,1,1,0.2)'}}> | </Text>
+            <Text style={styles.SubText}>조회 {this.props.data.hit}</Text>
 
-            <View style={styles.SubContainer2}>
-              <Text style={styles.SubText}> {this.props.data.nickname}</Text>
-              <Text style={{color: 'rgba(1,1,1,0.2)'}}> | </Text>
-              <Text style={styles.SubText}>조회 {this.props.data.hit}</Text>
-
-              <View
-                style={{
-                  flex: 3,
-                  alignItems: 'flex-end',
-                  marginRight: RNU.vw(3),
-                }}>
-                <Text style={styles.SubText}>
-                  {getTimestampToDate(this.props.data.create_time)}
-                </Text>
-              </View>
+            <View
+              style={{
+                flex: 3,
+                alignItems: 'flex-end',
+                marginRight: RNU.vw(3),
+              }}>
+              <Text style={styles.SubText}>
+                {getTimestampToDate(this.props.data.create_time)}
+              </Text>
             </View>
           </View>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            height: '80%',
+            marginRight: 5,
+            flexDirection: 'column',
+            justifyContent: 'center',
+          }}>
+          <Thumbs_up name="thumbs-o-up" style={styles.Icon} />
+          <Text style={styles.Text}>{this.props.data.recommend}</Text>
         </View>
         <Modal
           isVisible={this.state.isModalVisible}
@@ -96,7 +70,7 @@ class Item extends Component {
           </View>
           <Button title="delete test" onPress={this.deleteArticle} />
         </Modal>
-      </TouchableOpacity>
+      </View>
     );
   }
 }
@@ -109,6 +83,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#d6d7da',
     flexDirection: 'row',
     height: RNU.vh(10),
+    alignItems: 'center',
   },
   SubContainer: {
     margin: 0,
@@ -153,7 +128,40 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     height: '100%',
     margin: 0,
+    width: '100%',
+    flex: 1,
   },
 });
+
+function getTimestampToDate(timeStamp) {
+  var stamp = new Date(timeStamp);
+  var today = new Date();
+
+  var year = today.getFullYear().toString();
+  var month = (today.getMonth() + 1).toString();
+  var day = today.getDate().toString();
+  if (month.length < 2) month = '0' + month;
+  if (day.length < 2) day = '0' + day;
+  var today_date = year + month + day;
+
+  year = stamp.getFullYear().toString();
+  month = (stamp.getMonth() + 1).toString();
+  day = stamp.getDate().toString();
+  if (month.length < 2) month = '0' + month;
+  if (day.length < 2) day = '0' + day;
+  var stamp_date = year + month + day;
+
+  if (stamp_date === today_date) {
+    var h = stamp.getHours().toString();
+    var m = stamp.getMinutes().toString();
+
+    if (h.length < 2) h = '0' + h;
+    if (m.length < 2) m = '0' + m;
+
+    return h + ':' + m;
+  } else {
+    return month + '.' + day;
+  }
+}
 
 export default BoardListItem;
