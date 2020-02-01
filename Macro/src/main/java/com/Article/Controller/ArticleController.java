@@ -136,7 +136,6 @@ public class ArticleController {
         ArticleVO articleVO=new ArticleVO();
         try {
             articleVO=articleDAO.select_one(article_id);
-            throw new Exception();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -147,7 +146,6 @@ public class ArticleController {
             try {
                 articleDAO.delete_article(articleVO);
                 map.put("result","success");
-                throw new Exception();
             } catch (Exception e) {
                 map.put("result","fail");
                 e.printStackTrace();

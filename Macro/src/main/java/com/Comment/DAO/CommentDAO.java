@@ -13,9 +13,18 @@ public class CommentDAO {
     String namespace="com.Comment";
 
     public void insert_comment(CommentVO commentVO){
-        sqlSession.insert(namespace+".comment_insert",commentVO);
-        sqlSession.update(namespace+".comment_update",commentVO.getArticle_id());
+        sqlSession.insert(namespace+".insert_comment",commentVO);
+        sqlSession.update(namespace+".update_comment",commentVO.getArticle_id());
     }
 
+    public CommentVO select_comment(int comment_id){
+        CommentVO commentVO=new CommentVO();
+        commentVO=sqlSession.selectOne(namespace+".select_comment",comment_id);
+        return commentVO;
+    }
+
+    public void delete_comment(int comment_id){
+        sqlSession.delete(namespace+".delete_comment",comment_id);
+    }
 
 }

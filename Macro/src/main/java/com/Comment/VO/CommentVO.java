@@ -4,6 +4,7 @@ public class CommentVO {
     String content;
     String nickname;
     int article_id;
+    int comment_id;
     int candidate_id;
     String social_id;
 
@@ -29,6 +30,14 @@ public class CommentVO {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public int getComment_id() {
+        return comment_id;
+    }
+
+    public void setComment_id(int comment_id) {
+        this.comment_id = comment_id;
     }
 
     public int getArticle_id() {
