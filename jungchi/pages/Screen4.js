@@ -40,8 +40,8 @@ export default class Screen4 extends Component {
 const styles = StyleSheet.create({
   MainContainer: {
     flex: 1,
-    //alignItems: 'center',
-    //justifyContent: 'center',
+
+    backgroundColor: 'white',
   },
   cardContainer: {
     flex: 1,

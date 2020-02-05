@@ -17,6 +17,7 @@ import AwesomeButton from 'react-native-really-awesome-button';
 import Toast from 'react-native-root-toast';
 import SearchIcon from 'react-native-vector-icons/FontAwesome';
 import WriteIcon from 'react-native-vector-icons/FontAwesome5';
+import {NavigationEvents} from 'react-navigation';
 
 export default class BoardList extends Component {
   constructor(props) {
@@ -24,10 +25,6 @@ export default class BoardList extends Component {
     this.state = {
       refreshing: false,
     };
-    this.handleClick = this.handleClick.bind(this);
-  }
-  handleClick() {
-    console.log('Click happened');
   }
 
   state = {
@@ -41,7 +38,7 @@ export default class BoardList extends Component {
 
   getPostData = async () => {
     const data = await this.callPostData();
-
+    console.log('getPostData...');
     this.setState({
       data: data.reverse(),
       isLoading: true,
@@ -68,6 +65,7 @@ export default class BoardList extends Component {
   render() {
     return (
       <View style={styles.MainContainer}>
+        <NavigationEvents onWillFocus={() => this.getPostData()} />
         <ActionButton
           buttonColor="rgba(231,76,60,1)"
           hideShadow={true}
@@ -87,36 +85,16 @@ export default class BoardList extends Component {
             <SearchIcon name="search" style={styles.actionButtonIcon} />
           </ActionButton.Item>
         </ActionButton>
-        {/* <ScrollView
-          style={styles.cardContainer}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.onRefresh.bind(this)}
-            />
-          }>
-          {this.state.data
-            .slice(0)
-            .reverse()
-            .map((data, key) => {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    NavigationService.navigate('BoardRead', {
-                      data: data,
-                    });
-                  }}
-                  activeOpacity={0.3}>
-                  <BoardListItem data={data} key={key} />
-                </TouchableOpacity>
-              );
-            })}
-        </ScrollView> */}
         <FlatList
           data={this.state.data}
           showsVerticalScrollIndicator={false}
           refreshing={this.state.refreshing}
           onRefresh={this.onRefresh.bind(this)}
+          ListEmptyComponent={
+            <Text style={styles.emptyComponent}>
+              표시할 글이 없습니다.{'\n'}+ 를 눌러서 글을 작성해주세요!
+            </Text>
+          }
           keyExtractor={(item, key) => key.toString()}
           renderItem={({item}) => {
             return (
@@ -141,8 +119,6 @@ const styles = StyleSheet.create({
   MainContainer: {
     flex: 1,
     marginTop: 10,
-    //alignItems: 'center',
-    //justifyContent: 'center',
   },
   cardContainer: {
     flex: 1,
@@ -158,5 +134,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 22,
     color: 'white',
+  },
+  emptyComponent: {
+    color: 'rgba(128,128,128,0.7)',
+    textAlign: 'center',
+    fontSize: 15,
   },
 });

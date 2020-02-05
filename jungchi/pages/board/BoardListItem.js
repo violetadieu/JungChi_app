@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: RNU.vh(10),
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   SubContainer: {
     margin: 0,
