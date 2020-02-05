@@ -53,6 +53,7 @@ export default class Login_View extends Component {
         nickname: result.nickname,
         profileUri: result.thumb_image_url,
       });
+      console.log(this.state.profileUri);
     });
   };
 
@@ -86,10 +87,17 @@ export default class Login_View extends Component {
               right: 5,
               bottom: 90,
             }}>
-            <Image
-              source={{uri: this.state.profileUri}}
-              style={styles.header_image}
-            />
+            {this.state.profileUri ? (
+              <Image
+                source={{uri: this.state.profileUri}}
+                style={styles.header_image}
+              />
+            ) : (
+              <Image
+                source={require('../../assets/images/button/vote_button.png')}
+                style={styles.header_default_image}
+              />
+            )}
           </View>
         ) : (
           <View
