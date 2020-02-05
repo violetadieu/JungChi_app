@@ -14,8 +14,12 @@
             VALUES (#{social_id},#{nickname},#{content},#{article_id},#{candidate_id});
     </insert>
 
-    <update id="update_comment" parameterType="int">
+    <update id="update_comment_plus" parameterType="int">
         UPDATE happydaram2.article SET comment_size = comment_size+1 WHERE (`article_id` = #{article_id});
+    </update>
+
+    <update id="update_comment_minus" parameterType="int">
+        UPDATE happydaram2.article SET comment_size = comment_size-1 WHERE (`article_id` = #{article_id});
     </update>
 
 <delete id="delete_comment" parameterType="int">

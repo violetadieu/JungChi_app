@@ -26,11 +26,10 @@ public class ArticleVO {
     String nickname;
     Timestamp create_time;
     Timestamp update_time=Timestamp.valueOf(today);
-
     List<CommentVO> commentlist=new ArrayList<CommentVO>() {
 
     };
-    int comment_size=0;
+    int comment_size;
 
     public void setArticleVO(String social_id,String subject,String content,int article_type,String nickname,String article_picture){
         this.subject=subject;
@@ -144,7 +143,7 @@ public class ArticleVO {
     }
 
     public int getComment_size() {
-        return this.commentlist.size();
+        return comment_size;
     }
 
 }

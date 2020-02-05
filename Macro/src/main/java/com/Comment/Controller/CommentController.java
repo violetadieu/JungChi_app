@@ -56,7 +56,7 @@ public class CommentController {
         }
         else {
             try {
-                commentDAO.delete_comment(commentVO.getComment_id());
+                commentDAO.delete_comment(commentVO);
                 map.put("result","success");
             } catch (Exception e) {
                 map.put("result","fail");

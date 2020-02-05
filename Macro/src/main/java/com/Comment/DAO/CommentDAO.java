@@ -14,7 +14,7 @@ public class CommentDAO {
 
     public void insert_comment(CommentVO commentVO){
         sqlSession.insert(namespace+".insert_comment",commentVO);
-        sqlSession.update(namespace+".update_comment",commentVO.getArticle_id());
+        sqlSession.update(namespace+".update_comment_plus",commentVO.getArticle_id());
     }
 
     public CommentVO select_comment(int comment_id){
@@ -23,8 +23,9 @@ public class CommentDAO {
         return commentVO;
     }
 
-    public void delete_comment(int comment_id){
-        sqlSession.delete(namespace+".delete_comment",comment_id);
+    public void delete_comment(CommentVO commentVO){
+        sqlSession.delete(namespace+".delete_comment",commentVO.getComment_id());
+        sqlSession.update(namespace+".update_comment_minus",commentVO.getArticle_id());
     }
 
 }

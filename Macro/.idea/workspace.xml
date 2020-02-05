@@ -8,6 +8,11 @@
   <component name="ChangeListManager">
     <list default="true" id="f71561f7-b53b-45f3-85c8-190f356019cc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/Macro_war2/ROOT.war" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Macro_war2/ROOT.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Article/VO/ArticleVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Article/VO/ArticleVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Comment/Controller/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Comment/Controller/CommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Comment/DAO/CommentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Comment/DAO/CommentDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/sql/commentmapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/sql/commentmapper.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,6 +218,7 @@
       <workItem from="1580200429946" duration="49000" />
       <workItem from="1580593301909" duration="1175000" />
       <workItem from="1580710607918" duration="6000" />
+      <workItem from="1580884814183" duration="1373000" />
     </task>
     <servers />
   </component>
@@ -433,10 +439,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="720" height="450" key="XDebugger.FullValuePopup/0.0.1440.900@0.0.1440.900" timestamp="1578295487219" />
-    <state x="555" y="351" key="com.intellij.ide.util.TipDialog" timestamp="1580710607898">
+    <state x="555" y="334" key="com.intellij.ide.util.TipDialog" timestamp="1580884814082">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="555" y="351" key="com.intellij.ide.util.TipDialog/0.0.1440.900@0.0.1440.900" timestamp="1580710607898" />
+    <state x="555" y="334" key="com.intellij.ide.util.TipDialog/0.0.1440.900@0.0.1440.900" timestamp="1580884814082" />
     <state x="986" y="546" key="com.intellij.ide.util.TipDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1578025390630" />
     <state x="555" y="334" key="com.intellij.ide.util.TipDialog/0.23.1440.797@0.23.1440.797" timestamp="1580184612287" />
     <state x="555" y="319" key="com.intellij.ide.util.TipDialog/1440.0.1288.946/0.0.1440.900@0.0.1440.900" timestamp="1578878143084" />
