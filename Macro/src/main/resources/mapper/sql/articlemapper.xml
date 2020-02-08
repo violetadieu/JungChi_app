@@ -43,8 +43,8 @@
     </update>
 
     <insert id="insert_article" parameterType="ArticleVO">
-        INSERT INTO `happydaram2`.`article` (`subject`, `content`, `recommend`, `non_recommend`, `article_type`, `hit`, `nickname`,`social_id`,`comment_size`)
-        VALUES (#{subject}, #{content},'0', '0', #{article_type}, '0', #{nickname},#{social_id},'0');
+        INSERT INTO `happydaram2`.`article` (`subject`, `content`, `recommend`, `non_recommend`, `article_type`, `hit`, `nickname`,`social_id`,`comment_size`,`article_picture`)
+        VALUES (#{subject}, #{content},'0', '0', #{article_type}, '0', #{nickname},#{social_id},'0',#{article_picture});
     </insert>
 
     <delete id="delete_article"  parameterType="int">
