@@ -6,19 +6,26 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
+  ScrollView,
+  ActivityIndicator,
+  Image,
+  PermissionsAndroid,
 } from 'react-native';
 import RNU from 'react-native-units';
-import {
-  TextField,
-  FilledTextField,
-  OutlinedTextField,
-} from 'react-native-material-textfield';
-import {WriteHeaderButtons, Item} from '../board/navigation/WriteHeaderButton';
-import {HeaderButtons, HeaderButton} from 'react-navigation-header-buttons';
+import {TextField} from 'react-native-material-textfield';
 import AwesomeButton from 'react-native-really-awesome-button';
 import ExitIcon from 'react-native-vector-icons/Ionicons';
+import ImageIcon from 'react-native-vector-icons/FontAwesome';
 import Toast from 'react-native-root-toast';
 import axios from 'axios';
+import ImagePicker from 'react-native-image-picker';
+
+const imagePickerOptions = {
+  title: '사진 첨부',
+  cancelButtonTitle: '취소',
+  takePhotoButtonTitle: '직접 촬영',
+  chooseFromLibraryButtonTitle: '앨범에서 선택',
+};
 export default class Write extends Component {
   constructor(props) {
     super(props);
@@ -26,9 +33,51 @@ export default class Write extends Component {
   state = {
     isSearchVisible: false,
     isWriteVisible: false,
+    isUploading: false,
     subject: '',
     content: '',
+    imageSource: null,
     error: '',
+  };
+  checkAllPermissions = async () => {
+    try {
+      await PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      ]);
+      if (
+        (await PermissionsAndroid.check('android.permission.CAMERA')) &&
+        (await PermissionsAndroid.check('android.permission.CAMERA')) &&
+        (await PermissionsAndroid.check('android.permission.CAMERA'))
+      ) {
+        console.log('You can use the camera');
+        return true;
+      } else {
+        console.log('all permissions denied');
+        return false;
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+  selectImage = async () => {
+    if (!this.checkAllPermissions()) return;
+    ImagePicker.showImagePicker(imagePickerOptions, response => {
+      //console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        this.setState({
+          imageSource: response.uri,
+        });
+      }
+    });
   };
 
   _writeCheck = () => {
@@ -58,14 +107,24 @@ export default class Write extends Component {
     this.setState({isWriteVisible: !this.state.isWriteVisible});
   };
   _write = async () => {
-    let put_url = 'http://happydaram2.cafe24.com/article/write?';
+    let put_url = 'http://happydaram2.cafe24.com/article/write';
 
     let social_id = 'kakao01';
-    let article_type = '1';
+    let article_type = '99';
     let nickname = 'anonymous';
     let subject = this.state.subject;
     let content = this.state.content;
-    let article_picture = 'nopicture';
+    let article_picture = this.state.imageSource
+      ? this.state.imageSource
+      : 'no image';
+
+    // let form = new FormData();
+    // form.append('social_id', social_id);
+    // form.append('article_type', article_type);
+    // form.append('nickname', nickname);
+    // form.append('subject', subject);
+    // form.append('content', content);
+    // form.append('article_picture', article_picture);
 
     console.log(subject + content);
     put_url += 'social_id=' + social_id;
@@ -74,18 +133,19 @@ export default class Write extends Component {
     put_url += '&subject=' + subject;
     put_url += '&content=' + content;
     put_url += '&article_picture=' + article_picture;
-
+    console.log('article_picture: ', this.state.imageSource);
     await axios
       .put(put_url)
-      .then(this._writeSuccess)
-      .catch(this._writeFailed);
-    this.props.navigation.setParams({aaa: 'aaa'});
-    this.props.navigation.pop();
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+    //   // .then(this._writeSuccess)
+    //   // .catch(this._writeFailed);
+    // this.props.navigation.pop();
   };
 
   render() {
     return (
-      <View style={styles.MainContainer}>
+      <View style={styles.mainContainer}>
         <View
           style={{
             flexDirection: 'row',
@@ -94,13 +154,13 @@ export default class Write extends Component {
           <TouchableOpacity
             onPress={() => this.props.navigation.pop()}
             style={{flex: 1}}>
-            <ExitIcon name="md-arrow-back" style={styles.Button} />
+            <ExitIcon name="md-arrow-back" style={styles.button} />
           </TouchableOpacity>
           <Text
             style={{
               flex: 4,
               fontFamily: 'NotoSansKR-Medium',
-              fontSize: 20,
+              fontSize: 18,
               marginLeft: 3,
             }}>
             글 쓰기
@@ -111,12 +171,12 @@ export default class Write extends Component {
             backgroundDarker="#9932dc"
             borderRadius={20}
             style={{margin: 10}}
-            width={RNU.vw(20)}
-            height={RNU.vh(5)}
+            width={70}
+            height={35}
             onPress={this._writeCheck}>
             <Text
               style={{
-                fontSize: 17,
+                fontSize: 15,
                 fontFamily: 'NotoSansKR-Medium',
                 color: 'white',
               }}>
@@ -124,28 +184,40 @@ export default class Write extends Component {
             </Text>
           </AwesomeButton>
         </View>
-
-        <View style={styles.WriteContainer}>
-          <TextField
-            label="제목"
-            characterRestriction={30}
-            tintColor="#9932cc"
-            onChangeText={subject => {
-              this.setState({subject: subject, error: ''});
-            }}
-            error={this.state.error}
-          />
-          <TextInput
-            multiline={true}
-            placeholder="이 곳을 눌러서 글을 작성할 수 있습니다."
-            style={{
-              height: RNU.vh(50),
-              textAlignVertical: 'top',
-            }}
-            onChangeText={content => {
-              this.setState({content: content, error: ''});
-            }}
-          />
+        <ScrollView
+          style={styles.writeContainer}
+          showsVerticalScrollIndicator={false}>
+          <View>
+            <TextField
+              label="제목"
+              characterRestriction={30}
+              tintColor="#9932cc"
+              onChangeText={subject => {
+                this.setState({subject: subject, error: ''});
+              }}
+              error={this.state.error}
+            />
+            <TextInput
+              multiline={true}
+              placeholder="이 곳을 눌러서 글을 작성할 수 있습니다."
+              style={{
+                height: RNU.vh(55),
+                textAlignVertical: 'top',
+              }}
+              onChangeText={content => {
+                this.setState({content: content, error: ''});
+              }}
+            />
+          </View>
+        </ScrollView>
+        <Image source={{uri: this.state.imageSource}} style={styles.image} />
+        <View style={styles.bottomContainer}>
+          <TouchableOpacity onPress={this.selectImage}>
+            <ImageIcon
+              name="image"
+              style={{fontSize: 24, margin: 12, color: 'rgba(102,0,153,0.7)'}}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -153,16 +225,28 @@ export default class Write extends Component {
 }
 
 const styles = StyleSheet.create({
-  MainContainer: {backgroundColor: 'white'},
-  WriteContainer: {
+  mainContainer: {backgroundColor: 'white', height: '100%'},
+  writeContainer: {
     margin: 20,
     marginTop: 5,
-    height: '100%',
   },
-  Button: {
+  bottomContainer: {
+    height: 50,
+    borderTopColor: 'rgba(102,0,153,0.5)',
+    borderTopWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  button: {
     backgroundColor: 'transparent',
     fontSize: 30,
-    marginTop: 17,
+    marginTop: 13,
     paddingLeft: 15,
+  },
+  image: {
+    height: 120,
+    width: 120,
+    borderRadius: 10,
+    margin: 10,
   },
 });

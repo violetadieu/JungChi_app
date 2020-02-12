@@ -31,7 +31,7 @@ import Screen2 from './pages/Screen2';
 import Screen3 from './pages/Screen3';
 import Screen4 from './pages/Screen4';
 import Login from './pages/Login';
-import Login_View from './pages/header_login/Login_View';
+import Login_View from './pages/login/Login_View';
 
 import Election1 from './pages/election/Election1';
 import Election2 from './pages/election/Election2';
