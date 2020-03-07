@@ -30,33 +30,31 @@ import Screen1 from './pages/Screen1';
 import Screen2 from './pages/Screen2';
 import Screen3 from './pages/Screen3';
 import Screen4 from './pages/Screen4';
-import Login from './pages/Login';
 import Login_View from './pages/login/Login_View';
 
 import Election1 from './pages/election/Election1';
 import Election2 from './pages/election/Election2';
-import P_Board from './pages/party_board/P_Board';
 
 class NavigationDrawerStructure extends Component {
   constructor(props) {
     super(props);
   }
 
-  // 이벤트 등록
-  componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-  }
+  // // 이벤트 등록
+  // componentDidMount() {
+  //   BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  // }
 
-  // 이벤트 해제
-  componentWillUnmount() {
-    this.exitApp = false;
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-  }
+  // // 이벤트 해제
+  // componentWillUnmount() {
+  //   this.exitApp = false;
+  //   BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+  // }
 
   // 이벤트 동작
   handleBackButton = () => {
     // 2000(2초) 안에 back 버튼을 한번 더 클릭 할 경우 앱 종료
-    if (this.exitApp == undefined || !this.exitApp) {
+    if (this.exitApp === undefined || !this.exitApp) {
       ToastAndroid.show(
         "'뒤로' 버튼을 한 번 더 누르면 종료됩니다.",
         ToastAndroid.SHORT,
@@ -101,7 +99,6 @@ class NavigationDrawerStructure extends Component {
 }
 
 const FirstActivity_StackNavigator = createStackNavigator({
-  //All the screen from the Screen1 will be indexed here
   First: {
     screen: MainPage,
     navigationOptions: ({navigation}) => ({
@@ -118,7 +115,6 @@ const FirstActivity_StackNavigator = createStackNavigator({
 });
 
 const Screen1_StackNavigator = createStackNavigator({
-  //All the screen from the Screen1 will be indexed here
   First: {
     screen: Screen1,
     navigationOptions: ({navigation}) => ({
@@ -135,7 +131,6 @@ const Screen1_StackNavigator = createStackNavigator({
 });
 
 const Screen2_StackNavigator = createStackNavigator({
-  //All the screen from the Screen2 will be indexed here
   Second: {
     screen: Screen2,
     navigationOptions: ({navigation}) => ({
@@ -152,7 +147,6 @@ const Screen2_StackNavigator = createStackNavigator({
 });
 
 const Screen3_StackNavigator = createStackNavigator({
-  //All the screen from the Screen3 will be indexed here
   Third: {
     screen: Screen3,
     navigationOptions: ({navigation}) => ({
@@ -169,7 +163,6 @@ const Screen3_StackNavigator = createStackNavigator({
 });
 
 const Screen4_StackNavigator = createStackNavigator({
-  //All the screen from the Screen3 will be indexed here
   Fourth: {
     screen: Screen4,
     navigationOptions: ({navigation}) => ({
@@ -184,28 +177,6 @@ const Screen4_StackNavigator = createStackNavigator({
     }),
   },
 });
-
-const Login_StackNavigator = createStackNavigator(
-  {
-    Fourth: {
-      screen: Login,
-      // navigationOptions: ({navigation}) => ({
-      //   title: '로그인',
-      //   headerLeft: () => (
-      //     <NavigationDrawerStructure navigationProps={navigation} />
-      //   ),
-      //   headerStyle: {
-      //     backgroundColor: '#660099',
-      //   },
-      //   headerTintColor: '#fff',
-      // }),
-    },
-  },
-  {
-    mode: 'modal',
-    headerMode: 'none',
-  },
-);
 
 const DrawerNavigator = createDrawerNavigator(
   {
@@ -288,13 +259,6 @@ const DrawerNavigator = createDrawerNavigator(
       navigationOptions: {
         drawerLabel: () => null,
         drawerLockMode: 'locked-closed',
-      },
-    },
-    Login: {
-      screen: Login_StackNavigator,
-      navigationOptions: {
-        drawerLabel: () => null,
-        //drawerLockMode: 'locked-closed',
       },
     },
   },
