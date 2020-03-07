@@ -3,26 +3,9 @@ import React, {Component} from 'react';
 
 import {StyleSheet, View, Text, Button, TextInput, Alert} from 'react-native';
 
-import BoardList from './board/BoardList';
-import axios from 'axios';
-import RNU from 'react-native-units';
-import ActionButton from 'react-native-action-button';
-import Modal from 'react-native-modal';
-import RefreshService from './board';
-import {
-  TextField,
-  FilledTextField,
-  OutlinedTextField,
-} from 'react-native-material-textfield';
+import Navigation from './freeBoard/navigation';
+import {NavigationService} from './freeBoard';
 
-import Navigation from './board/navigation';
-import {NavigationService} from './board';
-
-import AwesomeButton from 'react-native-really-awesome-button';
-import Toast from 'react-native-root-toast';
-import SearchIcon from 'react-native-vector-icons/FontAwesome';
-import WriteIcon from 'react-native-vector-icons/FontAwesome5';
-import ExitIcon from 'react-native-vector-icons/Octicons';
 export default class Screen4 extends Component {
   render() {
     return (

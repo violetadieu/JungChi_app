@@ -1,7 +1,4 @@
-//This is an example code for NavigationDrawer//
 import React, {Component} from 'react';
-import axios from 'axios';
-//import react in our code.
 import {
   StyleSheet,
   View,
@@ -10,8 +7,10 @@ import {
   TouchableOpacity,
   Button,
   Alert,
+  Image,
 } from 'react-native';
 
+import axios from 'axios';
 export default class MainPage extends Component {
   constructor(props) {
     super(props);
@@ -45,27 +44,6 @@ export default class MainPage extends Component {
     return (
       <View style={styles.MainContainer}>
         <Text style={{fontSize: 23}}> Home </Text>
-        <TouchableOpacity>
-          <Button
-            title="KaKao"
-            onPress={() => {
-              this.props.navigation.navigate('Login');
-            }}
-          />
-          <Button
-            title="Naver"
-            onPress={() => {
-              console.log(this.state.url);
-            }}
-          />
-          <Button
-            title="text"
-            onPress={() => {
-              this.props.navigation.setParams(('ffff': 'aaa'));
-              this.props.navigation.navigate('Screen4');
-            }}
-          />
-        </TouchableOpacity>
       </View>
     );
   }

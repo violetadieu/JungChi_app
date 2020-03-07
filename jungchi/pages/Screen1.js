@@ -5,11 +5,7 @@
   각각의 버튼은 'election1.js', 'election2.js' 로 navigate 한다.
 */
 import React, {Component} from 'react';
-//import react in our code.
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
-// import all basic components
-import {createBottomTabnavigator, BottomTabBar} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
 
 import RNU from 'react-native-units';
 
